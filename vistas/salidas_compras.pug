@@ -1,0 +1,109 @@
+doctype html
+html
+
+  head
+    title Venta de Novillos
+    link(rel="stylesheet", href="/styles.css")
+    link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", rel="stylesheet")
+
+  body(style="min-height: 100vh; background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
+    .container-fluid.overflow-hidden
+      .row.vh-100.overflow-auto
+        .col-6.col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.d-flex.sticky-top
+          .d-flex.flex-sm-column.flex-row.flex-grow-1.align-items-center.align-items-sm-start.px-3.pt-2.text-white.position-fixed
+            a(href='#', class='d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none')
+              span.fs-5 A
+              span.d-none.d-sm-inline grofer
+              img(src='https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+            ul.nav.nav-pills.flex-sm-column.flex-row.flex-nowrap.flex-shrink-1.flex-sm-grow-0.flex-grow-1.mb-sm-auto.mb-0.justify-content-center.align-items-center.align-items-sm-start#menu
+              li.nav-item
+                a.nav-link.px-sm-0.px-2(href="/paginaprincipal")
+                  i.fs-5.bi-house
+                  span.ms-1.d-none.d-sm-inline Pagina Principal
+                  
+                .dropdown.py-sm-4.mt-sm-auto.ms-auto.ms-sm-0.flex-shrink-1
+                  a(href='#', class='d-flex align-items-center text-white text-decoration-none dropdown-toggle', id='dropdownUser1', data-bs-toggle='dropdown', aria-expanded='false')
+                    img(src='https://cdn-icons-png.flaticon.com/512/219/219983.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+                    span.d-none.d-sm-inline.mx-1()= nombreUsuario
+                  ul.dropdown-menu.dropdown-menu-dark.text-small.shadow(aria-labelledby='dropdownUser1')
+                    li
+                      a.dropdown-item(href='#') Cambiar Contraseña
+                    li
+                      hr.dropdown-divider
+                    li
+                      a.dropdown-item(href='/logout') Cerrar sesion  
+
+        .col.d-flex.flex-column.h-sm-100
+          table.table.table-responsive.table-sm.table-striped.table-bordered.table-hover.text-center.mt-5
+        
+            thead
+              tr
+                th(scope="col") #
+                th(scope="col") N* novillo
+                th(scope="col") Color
+                th(scope="col") Fecha De Compra         
+                th(scope="col") Fecha de Venta
+                th(scope="col") Peso de compra
+                th(scope="col") Peso de venta
+                th(scope="col") Causa de Salida
+                th(scope="col") Propietario
+                th(scope="col") Observaciones
+              
+            tbody.table-group-divider.alin
+            -let contador = 1
+            each salida in salidas_compras
+              tr
+                td(scope="row")= contador++
+                td= salida.num_ternero
+                td= salida.color
+                td= salida.fecha_compra
+                td= salida.fecha_salida
+                td= salida.peso_entrada
+                td= salida.peso_salida
+                td= salida.causa_salida
+                td= salida.propietario
+                td= salida.observacion
+          .row 
+            .col-2       
+              button#downloadExcel.btn.btn-success(type="button") Descargar lista
+            .col-2
+              a(href="/vacas")
+                button#downloadExcel.btn.btn-primary Agregar salida
+
+        
+
+        script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL", crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js") // Include XLSX library
+        script.
+          // JavaScript para desplegar el menú al pasar el cursor por encima
+          document.addEventListener('DOMContentLoaded', function() {
+            var botonDesplegable = document.getElementById('boton-desplegable');
+            var menuDesplegable = document.getElementById('menu-desplegable');
+
+            botonDesplegable.addEventListener('mouseover', function() {
+              menuDesplegable.style.display = 'block';
+            });
+
+            botonDesplegable.addEventListener('mouseout', function() {
+              menuDesplegable.style.display = 'none';
+            });
+          });
+
+          // JavaScript para descargar listado de salidas como Excel
+          document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('downloadExcel').addEventListener('click', function () {
+              // Clonar la tabla para eliminar los botones antes de convertirla en hoja de cálculo
+              const tableClone = document.querySelector('table').cloneNode(true);
+              const buttons = tableClone.querySelectorAll('button');
+              buttons.forEach(button => button.remove());
+
+              const sheet = XLSX.utils.table_to_sheet(tableClone);
+              const wb = XLSX.utils.book_new();
+              XLSX.utils.book_append_sheet(wb, sheet, 'Sheet 1');
+              
+              // Cambiar el nombre del archivo a 'salidas.xlsx'
+              XLSX.writeFile(wb, 'Salidas ternero compras.xlsx');
+            });
+          });

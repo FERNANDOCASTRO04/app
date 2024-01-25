@@ -1,0 +1,35 @@
+doctype html
+html(lang="es")
+
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png")
+    title Restablecer Contraseña
+    link(rel="stylesheet", href="../css/login.css")
+    link(integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap", rel="stylesheet")
+    link(integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==", crossorigin="anonymous", referrerpolicy="no-referrer", rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css")
+
+  body
+    main
+      .vh-100.d-flex.justify-content-center.align-items-center
+        .container
+          .row.d-flex.justify-content-center
+            .col-12.col-md-8.col-lg-6
+              .card.bg-white(id="Cuadro")
+                .card-body.p-5
+                
+                  form.mb-3.mt-md-4(action="/auth/forgot-password", method="post")
+                    center
+                      img(src="https://e7.pngegg.com/pngimages/255/988/png-clipart-logo-brand-font-yellow-maize-bowl-agro-symbol.png", width="80")
+                      br
+
+                    .mb-3.text-center
+                      label(for="correo", class="form-label")
+                      h5 Correo Electronico
+                      input(type="email", class="form-control", id="correo",name="correo" placeholder="Bartolomeo@gmail.com" required)
+
+                    .d-grid
+                      button.btn.btn-outline-info(type="submit") Enviar Solicitud

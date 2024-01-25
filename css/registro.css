@@ -1,0 +1,15 @@
+
+h1{text-align: center;
+    background-color: rgb(90, 216, 255);
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+form{
+    
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgb(39, 180, 251);
+}
+
+.container{
+    width: 500px;
+    margin: 0 auto;
+}

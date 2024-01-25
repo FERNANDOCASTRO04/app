@@ -1,0 +1,43 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css", rel="stylesheet")
+    link(rel="stylesheet", href="../css/login.css")
+    link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png")
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin="anonymous")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap", rel="stylesheet")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css", integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==", crossorigin="anonymous", referrerpolicy="no-referrer")
+    title Recuperar Contraseña
+
+  body
+    main
+      div.vh-100.d-flex.justify-content-center.align-items-center
+        div.container
+          div.row.d-flex.justify-content-center
+            div.col-12.col-md-8.col-lg-6
+              div.card.bg-white#Cuadro
+                div.card-body.p-5
+                  form.mb-3.mt-md-4
+                    center
+                      img(src="https://e7.pngegg.com/pngimages/255/988/png-clipart-logo-brand-font-yellow-maize-bowl-agro-symbol.png", width="80")
+                      br
+                    br
+                    header
+                      center
+                        p#intro(style="font-size: 19px") Restablecimiento de Contraseña
+
+                    div.mb-3
+                      label.form-label(for="password") Nueva Contraseña
+                      input(type="password", class="form-control", id="password", placeholder="***********")
+
+                    div.mb-3
+                      label.form-label(for="password") Confirmar Contraseña
+                      input(type="password", class="form-control", id="password", placeholder="***********")
+
+                    div.d-grid
+                      a.btn.btn-outline-info(type="submit", href="login.html") Cambiar contraseña

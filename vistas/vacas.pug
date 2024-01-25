@@ -1,0 +1,357 @@
+doctype html
+html
+
+  head
+    title Vacas
+    link(rel="stylesheet", href="/styles.css")
+    link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", rel="stylesheet")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js")
+    style.
+      .overlay-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .dialog-box {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        position: fixed;
+      
+      }
+
+      .message-container {
+        margin-top: 20px;
+        text-align: center;
+        color: red; // Añade este estilo para cambiar el color del mensaje a rojo
+      }
+  
+  
+  
+  
+  
+  
+  
+  body(style="min-height: 100vh; background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
+    .container-fluid.overflow-hidden
+        .row.vh-100.overflow-auto
+          .col-12.col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.d-flex.sticky-top.fixed
+            .d-flex.flex-sm-column.flex-row.flex-grow-1.align-items-center.align-items-sm-start.px-3.pt-2.text-white.position-fixed
+              a(href='#', class='d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none')
+                span.fs-5 A
+                span.d-none.d-sm-inline grofer
+                img(src='https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+              ul.nav.nav-pills.flex-sm-column.flex-row.flex-nowrap.flex-shrink-1.flex-sm-grow-0.flex-grow-1.mb-sm-auto.mb-0.justify-content-center.align-items-center.align-items-sm-start#menu
+                li.nav-item
+                  a.nav-link.px-sm-0.px-2(href="/paginaprincipal")
+                    i.fs-5.bi-house
+                    span.ms-1.d-none.d-sm-inline Pagina Principal
+                  
+                  .dropdown.py-sm-4.mt-sm-auto.ms-auto.ms-sm-0.flex-shrink-1
+                    a(href='#', class='d-flex align-items-center text-white text-decoration-none dropdown-toggle', id='dropdownUser1', data-bs-toggle='dropdown', aria-expanded='false')
+                      img(src='https://cdn-icons-png.flaticon.com/512/219/219983.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+                      span.d-none.d-sm-inline.mx-1()= nombreUsuario
+                    ul.dropdown-menu.dropdown-menu-dark.text-small.shadow(aria-labelledby='dropdownUser1')
+                      li
+                        a.dropdown-item(href='#') Cambiar Contraseña
+                      li
+                        hr.dropdown-divider
+                      li
+                        a.dropdown-item(href='/logout') Cerrar sesion 
+
+  
+          .col.d-flex.flex-column.h-sm-100
+            .col.d-flex.flex-column.h-sm-100
+              div.container
+                main.row.overflow
+                  .col
+
+                    div.overlay-container
+                      div.overlay
+                      div.dialog-box
+                table#vacasTable.table.table-responsive.table-sm.table-striped.table-bordered.table-hover.text-center.container-flex.mt-5
+                  thead
+                    tr
+                      th(scope="col") #
+                      th(scope="col") N* Vaca
+                      th(scope="col") Nombre
+                      th(scope="col") Propietario
+                      th(scope="col") Observaciones
+                      th(scope="col") 
+                  tbody.table-group-divider.alin
+                  - let contador = 1
+                  each vaca in vacas
+                    tr
+                      th(scope="row")= contador++
+                      td= vaca.num_vaca
+                      td= vaca.nombre_vaca
+                      td= vaca.propietario
+                      td= vaca.observacion
+                      td
+                        button.btn.btn-warning(type="button", class="btnEditarCompra", data-num-vaca=vaca.num_vaca, onclick=`showDialog('editar', '${vaca.id_vaca}', '${vaca.num_vaca}', '${vaca.nombre_vaca}', '${vaca.propietario}', '${vaca.observacion}')`)                             
+                          span.material-icons edit
+                        button.btn.btn-danger(type="button", class="btnEliminarCompra", data-num-vaca=vaca.num_vaca, onclick=`showDialog('eliminar', '${vaca.id_vaca}', '${vaca.num_vaca}', '${vaca.nombre_vaca}', '${vaca.propietario}', '${vaca.observacion}')`)                           
+                          span.material-icons sell
+              
+                button#prevPage.btn.btn-secondary.mb-2(type="button") Anterior
+                button#nextPage.btn.btn-secondary.mb-2(type="button") Siguiente       
+                .row 
+                  .col-3
+                    button#downloadExcel.btn.btn-success(type="button") Descargar lista de Vacas
+                  .col-2
+                    a(href="/agregarvacas")
+                      button#downloadExcel.btn.btn-primary Agregar Vaca 
+            
+            script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL", crossorigin="anonymous")
+            script.
+              function showDialog(tipo, id_vaca, num_vaca, nombre_vaca, propietario, observacion) {
+                const overlayContainer = document.querySelector('.overlay-container');
+                const dialogBox = document.querySelector('.dialog-box');
+
+                dialogBox.innerHTML = '';
+
+                const table = document.querySelector('table');
+                const tableRect = table.getBoundingClientRect();
+                const tableWidth = tableRect.width;
+                const tableTop = tableRect.top;
+                const tableLeft = tableRect.left;
+
+                let formHTML = '';
+
+                if (tipo === 'eliminar') {
+                  formHTML = `
+                     <form class="row g-3" action="/eliminarvaca" method="POST" id="elim">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="id_vaca">Id de la vaca</label></b>
+                            <input type="number" class="form-control" name="id_vaca" value="${id_vaca}" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="num_vaca">Número de la vaca</label></b>
+                            <input type="text" class="form-control" name="num_vaca" value="${num_vaca}" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="nombre_vaca">Nombre de la vaca</label></b>
+                            <input type="text" class="form-control" name="nombre_vaca" value="${nombre_vaca}" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="peso_final">Peso de salida</label></b>
+                            <input type="number" class="form-control" name="peso_final" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="fecha">Fecha de salida</label></b>
+                            <input type="date" class="form-control" name="fechas" required>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                        <div class="form-group">
+                          <b>
+                          <label class="form-label" for="csalida">Causa de Salida</label>
+                          <select class="form-control" name="csalida" required>
+                            <option value=""></option>
+                            <option value="Venta">Venta</option>
+                            <option value="Muerte">Muerte</option>
+                          </select>
+                        </div></b>
+                      </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="propietario">Propietario</label></b>
+                            <input type="text" class="form-control" name="propietario" value="${propietario}" required>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="observacion">Observación</label></b>
+                            <input type="text" class="form-control" name="observacion" value="${observacion}">
+                          </div>
+                        </div>
+
+                        <div class="row text-center">
+                          <div class="col-6, mt-2">
+                            <button class="btn btn-primary" type="submit">Generar Venta</button>
+                          </div>
+                        </div>
+                      </form>
+                  `;
+                } else if (tipo === 'editar') {
+                  formHTML = `
+                    <form class="row g-3" action="/editarvaca" method="POST">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="id_vaca">Id de la vaca</label></b>
+                            <input type="number" class="form-control" name="id_vaca" value="${id_vaca}" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="num_vaca">Número de la vaca</label></b>
+                            <input type="text" class="form-control" name="num_vaca" value="${num_vaca}" readonly>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="nombre_vaca">Nombre de la vaca</label></b>
+                            <input type="text" class="form-control" name="nombre_vaca" value="${nombre_vaca}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="propietario">Propietario</label></b>
+                            <input type="text" class="form-control" name="propietario" value="${propietario}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <b><label class="form-label" for="observacion">Observación</label></b>
+                            <input type="text" class="form-control" name="observacion" value="${observacion}">
+                          </div>
+                        </div>
+
+                        <div class="row text-center">
+                          <div class="col-6, mt-2">
+                            <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+                          </div>
+                        </div>
+                      </form>
+                  `;
+                }
+
+                dialogBox.innerHTML = formHTML;
+
+                dialogBox.style.width = tableWidth + 'px';
+                dialogBox.style.maxWidth = '90%';
+                dialogBox.style.top = tableTop + 'px';
+                dialogBox.style.left = tableLeft + window.scrollX + 'px';
+
+                overlayContainer.style.display = 'flex';
+              }
+            script.
+              document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('downloadExcel').addEventListener('click', function () {
+                  const allRows = document.querySelectorAll('#vacasTable tbody tr');
+                  const tableClone = document.querySelector('table').cloneNode(true);
+                  const clonedRows = tableClone.querySelectorAll('#vacasTable tbody tr');
+
+                  // Restaurar la visibilidad de todas las filas clonadas
+                  clonedRows.forEach((row, index) => {
+                    row.style.display = ''; 
+                  });
+
+                  const buttons = tableClone.querySelectorAll('button');
+                  buttons.forEach(button => button.remove());
+
+                  const sheet = XLSX.utils.table_to_sheet(tableClone);
+                  const wb = XLSX.utils.book_new();
+                  XLSX.utils.book_append_sheet(wb, sheet, 'Sheet 1');
+                  XLSX.writeFile(wb, 'vacas.xlsx');
+
+                  // Restaurar la visibilidad de las filas originales
+                  allRows.forEach((row, index) => {
+                    row.style.display = ''; 
+                  });
+                });
+              });
+            script.
+              document.addEventListener('DOMContentLoaded', function () {
+                // ... Tu código anterior ...
+                const itemsPerPage = 7;
+                let currentPage = 1;
+
+                function updateTable() {
+                  const tableRows = document.querySelectorAll('#vacasTable tbody tr');
+
+                  tableRows.forEach((row, index) => {
+                    if (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) {
+                      row.style.display = '';
+                    } else {
+                      row.style.display = 'none';
+                    }
+                  });
+                }
+
+                function goToPage(page) {
+                  currentPage = page;
+                  updateTable();
+                }
+
+                document.getElementById('prevPage').addEventListener('click', function () {
+                  if (currentPage > 1) {
+                    goToPage(currentPage - 1);
+                  }
+                });
+
+                document.getElementById('nextPage').addEventListener('click', function () {
+                  const tableRows = document.querySelectorAll('#vacasTable tbody tr');
+                  if (currentPage < Math.ceil(tableRows.length / itemsPerPage)) {
+                    goToPage(currentPage + 1);
+                  }
+                });
+
+                // Agregar esta llamada para mostrar las primeras 4 filas al cargar la página
+                updateTable();
+              });              
+            script.
+              document.addEventListener('DOMContentLoaded', function () {
+                // ... Tu código anterior ...
+
+                const itemsPerPage = 7;
+                let currentPage = 1;
+
+                function updateTable() {
+                  const tableRows = document.querySelectorAll('#vacasTable tbody tr');
+
+                  tableRows.forEach((row, index) => {
+                    if (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) {
+                      row.style.display = '';
+                    } else {
+                      row.style.display = 'none';
+                    }
+                  });
+                }
+
+                function goToPage(page) {
+                  currentPage = page;
+                  updateTable();
+                }
+
+                document.getElementById('prevPage').addEventListener('click', function () {
+                  if (currentPage > 1) {
+                    goToPage(currentPage - 1);
+                  }
+                });
+
+                document.getElementById('nextPage').addEventListener('click', function () {
+                  const tableRows = document.querySelectorAll('#vacasTable tbody tr');
+                  if (currentPage < Math.ceil(tableRows.length / itemsPerPage)) {
+                    goToPage(currentPage + 1);
+                  }
+                });
+              });

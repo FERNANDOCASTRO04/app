@@ -1,0 +1,63 @@
+doctype html
+html(lang="es")
+
+  head
+    title Pagina Principal
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png")
+    link(rel="stylesheet", href="styles.css")
+    link(integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap", rel="stylesheet")
+    link(integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==", crossorigin="anonymous", referrerpolicy="no-referrer", rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css")
+
+  body(style="margin: 0; overflow: hidden;") 
+    #navbar.navbar.navbar-expand-lg(data-bs-spy="scroll", data-bs-target="#navbarNav", style="background-color: transparent; position: absolute; width: 100%; z-index: 100;") 
+      .container-fluid
+        a.navbar-brand(href="/")
+          b 
+            img(src="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png", alt="Logo", width="30", height="30", class="d-inline-block align-top")
+            |  Agrofer
+        button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNav", aria-controls="navbarNav", aria-expanded="false", aria-label="Toggle navigation")
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse#navbarNav
+          ul.navbar-nav.ms-auto
+            li.nav-item
+              a.nav-link.active(href="/login")
+                b 
+                  | Iniciar
+            li.nav-item
+              a.nav-link.active(href="/registrarse")
+                b 
+                  | Registrarse
+            li.nav-item
+              a.nav-link.active(href="#contact")
+                b 
+                  | Contacto
+    
+    #carouselExampleFade.carousel.slide.carousel-fade(data-bs-ride="carousel", class="full-screen-carousel") 
+      // Añadir la clase "h-100" para que ocupe el 100% de la altura
+      .carousel-inner.h-100
+        .carousel-item.active.h-100 
+          img(src="https://production-img.croper.com/images/eyu6k9cz-r42tkhxjpjog/original.jpeg", class="d-block w-100 h-100", alt="...") 
+        .carousel-item.h-100
+          img(src="https://www.suganado.com/wp-content/uploads/jet-engine-forms/1140/2021/05/WhatsApp-Image-2021-05-11-at-3.01.14-PM-2.jpeg", class="d-block w-100 h-100", alt="...") 
+        .carousel-item.h-100
+          img(src="https://img.lalr.co/cms/2022/02/07144219/Nuevo-proyecto-1-2.png?w=480&r=16_9", class="d-block w-100 h-100", alt="...") 
+      button.carousel-control-prev(type="button", data-bs-target="#carouselExampleFade", data-bs-slide="prev") 
+        span.carousel-control-prev-icon(aria-hidden="true") 
+        span.visually-hidden Previous 
+      button.carousel-control-next(type="button", data-bs-target="#carouselExampleFade", data-bs-slide="next") 
+        span.carousel-control-next-icon(aria-hidden="true") 
+        span.visually-hidden Next 
+  
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js", crossorigin="anonymous")
+    script.
+      document.addEventListener('DOMContentLoaded', function() {
+        var myCarousel = new bootstrap.Carousel(document.getElementById('carouselExampleFade'), {
+          interval: 5000, // Puedes ajustar el intervalo según tus preferencias (en milisegundos)
+          pause: 'hover', // Esta opción permite pausar el carrusel cuando el mouse está sobre él
+          wrap: true // Permite que el carrusel vuelva al inicio después de llegar al último elemento
+        });
+      });

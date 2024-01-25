@@ -1,0 +1,102 @@
+doctype html
+html(lang="es")
+
+head
+  title Inicio de sesión
+  meta(charset="UTF-8")
+  meta(http-equiv="X-UA-Compatible", content="IE=edge")
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png")
+  link(rel="stylesheet", href="styles.css")
+  link(integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css", rel="stylesheet")
+  link(href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap", rel="stylesheet")
+  link(integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==", crossorigin="anonymous", referrerpolicy="no-referrer", rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css")
+
+body(style="background-image: url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
+  br
+  .container.text-center
+    .row
+      .col-md-6.d-flex.flex-column
+        .card.bg-white(id="Cuadro")
+          .card-body.p-5
+            form.mb-3.mt-md-4(action="/login", method="post")
+              center
+                img(src="https://raw.githubusercontent.com/FERNANDOCASTRO04/Agrofer/74b8586b89ec0191ef0648be0c505c9dfbd7c5a5/public/imagenes/logo.png", width="80")
+                br
+
+              header
+                b
+                  center
+                    p#intro(style="font-size: 19px") Introducir usuario y contraseña
+
+              .mb-3
+                b
+                  label(for="nom_usuario", class="form-label") Nombre de Usuario
+                  input(type="text", class="form-control", id="nom_usuario", name="nom_usuario", placeholder="Bartolomeo", required)
+
+              .mb-3
+                b
+                  label(for="contrasena", class="form-label") Contraseña
+                  input(type="password", class="form-control", id="contrasena", name="contrasena", required, placeholder="***********")
+
+              div
+                a(href="solicitud", id="Cuent1") ¿Olvidaste tu Contraseña?
+              
+              .d-grid
+                button.btn.btn-outline-info(type="submit") Iniciar Sesion
+              if message
+                p#message(style='color: red;') #{message} 
+
+            div
+              center
+                a.btn(onclick="redireccionar()") No tienes una cuenta  Registrarse
+                script.
+                  function redireccionar() {
+                    window.location.href = 'registrarse';
+                  }
+
+      .col-md-6
+        br
+        br
+        br
+        br
+        br
+        #carouselExampleCaptions.carousel.slide(data-bs-ride="carousel")
+          .carousel-indicators
+            button(type="button", data-bs-target="#carouselExampleCaptions", data-bs-slide-to="0", class="active", aria-current="true", aria-label="Slide 1")
+            button(type="button", data-bs-target="#carouselExampleCaptions", data-bs-slide-to="1", aria-label="Slide 2")
+            button(type="button", data-bs-target="#carouselExampleCaptions", data-bs-slide-to="2", aria-label="Slide 3")
+          .carousel-inner
+            .carousel-item.active
+              img(src="https://m.n.com.do/wp-content/uploads/2021/12/GANADO-BOVINO2-1140x675.jpg", class="d-block w-100", alt="...", height="265")
+              .carousel-caption.d-none.d-md-block
+                h4 BIENVENIDO A AGROFER
+                p La mejor forma de llevar registro de sus animales
+            .carousel-item
+              img(src="https://distribucioneshyh.com/wp-content/uploads/2021/01/30.jpg", class="d-block w-100", alt="...", height="265")
+              .carousel-caption.d-none.d-md-block
+                h4 BIENVENIDO A AGROFER
+                p La mejor forma de llevar registro de sus animales
+            .carousel-item
+              img(src="https://img.lalr.co/cms/2014/05/13173533/ganado_0.jpg?size=xl&ratio=r40_21", class="d-block w-100", alt="...", height="265")
+              .carousel-caption.d-none.d-md-block
+                h4 BIENVENIDO A AGROFER
+                p La mejor forma de llevar registro de sus animales
+          button.carousel-control-prev(type="button", data-bs-target="#carouselExampleCaptions", data-bs-slide="prev")
+            span.carousel-control-prev-icon(aria-hidden="true")
+            span.visually-hidden Previous
+          button.carousel-control-next(type="button", data-bs-target="#carouselExampleCaptions", data-bs-slide="next")
+            span.carousel-control-next-icon(aria-hidden="true")
+            span.visually-hidden Next
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js", crossorigin="anonymous")
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      var messageElement = document.getElementById('message');
+      if (messageElement) {
+        setTimeout(function() {
+          messageElement.style.opacity = '0';
+        }, 4000); // 3000 milisegundos = 3 segundos, ajusta según sea necesario
+      }
+    });
+  
+
