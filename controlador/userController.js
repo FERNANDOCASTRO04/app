@@ -105,7 +105,7 @@ const sendPasswordResetEmail = async (req, resetTokenString) => {
             from: 'serviciotecnicoagrofer@gmail.com',
             to: correo,
             subject: 'Restablecimiento de Contraseña',
-            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: http://localhost:3000/restablecer, copie y pegue este token unico y con limite de tiempo token= ${resetTokenString}`,
+            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: http://agrofer.onrender.com/restablecer, copie y pegue este token unico y con limite de tiempo token= ${resetTokenString}`,
         };
         await transporter.sendMail(mailOptions);
         console.log('Correo electrónico enviado correctamente');
