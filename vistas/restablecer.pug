@@ -23,7 +23,7 @@ body(style="background-image: url('https://ruminants.ceva.pro/hubfs/mercado-de-g
                   center
                     p#intro(style="font-size: 19px") Restablecer contraseña
 
-          form(action='/resetPassword/#{token}', method='post')
+          form(action='/resetPassword', method='post')
             if message
               p#message(style='color: red;') #{message}
             p
