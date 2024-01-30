@@ -143,4 +143,121 @@ const getUserByEmail = async (correo) => {
     });
 }; 
 
-export { getUserById, authenticateUser, getAnimalesByUserId, getUserByEmail };
+const generateResetToken = async (correo) => {
+    try {
+        const randomString = Math.random().toString(36).substring(2, 15);
+        const resetTokenObject = await bcrypt.hash(correo + randomString, saltRounds);
+        const resetTokenString = resetTokenObject.toString();
+        const expirationTime = new Date();
+        expirationTime.setHours(expirationTime.getHours() + 1);
+
+        console.log('Generando token para:', correo);
+        console.log('Token generado en cadena:', resetTokenString);
+        console.log('Fecha de expiración del token:', expirationTime);
+
+        // Resto del código
+        const connection = await new Promise((resolve, reject) => {
+            pool.getConnection((err, conn) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(conn);
+                }
+            });
+        });
+
+        const query = 'UPDATE usuarios SET reset_token = ?, reset_token_expiration = ? WHERE correo = ?';
+        await new Promise((resolve, reject) => {
+            connection.query(query, [resetTokenString, expirationTime, correo], (err, result) => {
+                connection.release();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        console.log('Token generado en cadena:', resetTokenString);
+        return resetTokenString;
+    } catch (error) {
+        console.error('Error al generar el token:', error);
+        throw error;
+    }
+
+       
+   
+};
+
+// Restablecer la contraseña con un token válido
+const resetPassword = async (resetToken, newPassword) => {
+    try {
+        const connection = await new Promise((resolve, reject) => {
+            pool.getConnection((err, conn) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(conn);
+                }
+            });
+        });
+
+        const currentTime = new Date().getTime();
+        console.log('Restableciendo contraseña para el token:', resetToken);
+        console.log('Nueva contraseña:', newPassword);
+        const query = 'UPDATE usuarios SET contrasena = ?, reset_token = NULL, reset_token_expiration = NULL WHERE reset_token = ? AND reset_token_expiration > ?';
+        await new Promise(async (resolve, reject) => {
+            connection.query(query, [await bcrypt.hash(newPassword, saltRounds), resetToken, currentTime], (err, result) => {
+                connection.release();
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+
+        console.log('Contraseña restablecida con éxito');
+    } catch (error) {
+        console.error('Error al restablecer la contraseña:', error);
+        throw error;
+    }
+};
+
+const getUserByResetToken = async (correo, resetToken) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                reject(err);
+            }
+
+            const currentTime = Date.now();
+
+            const query = 'SELECT * FROM usuarios WHERE correo = ? AND reset_token = ? AND reset_token_expiration > ?';
+            connection.query(query, [correo, resetToken, currentTime], (err, results) => {
+                connection.release();
+
+                if (err) {
+                    reject(err);
+                } else {
+                    if (results.length > 0) {
+                        resolve(results[0]);
+                    } else {
+                        reject('Token inválido o expirado');
+                    }
+                }
+            });
+        });
+    });
+};
+
+
+
+
+
+
+
+export { getUserById, authenticateUser, getAnimalesByUserId, getUserByEmail,
+    generateResetToken,
+    resetPassword,
+    getUserByResetToken };

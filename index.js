@@ -250,6 +250,10 @@ app.get('/solicitud', (req, res) => {
     res.render('solicitud');
 });
 
+app.get('/restablecer', (req, res) => {
+    res.render('restablecer');
+});
+
 
 
 app.post('/editarcompra', isAuthenticated, compraController.editarCompra, (req, res) => {
@@ -304,6 +308,10 @@ app.post('/agregaranimal', isAuthenticated, animalController.insertarAnimal, (re
 app.post('/agregarterneroseva', isAuthenticated, cebaController.insertarCeba, (req, res) => {
     res.redirect('/terneros-ceba');
 });
+
+app.post('/solicitud', userController.requestPasswordReset)
+
+app.post('/resetPassword', userController.resetPassword)
 
 // ... (más configuraciones y middleware)
 

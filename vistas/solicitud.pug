@@ -12,7 +12,7 @@ html(lang="es")
     link(href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap", rel="stylesheet")
     link(integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==", crossorigin="anonymous", referrerpolicy="no-referrer", rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css")
 
-  body
+  body(style="background-image: url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
     main
       .vh-100.d-flex.justify-content-center.align-items-center
         .container
@@ -21,7 +21,9 @@ html(lang="es")
               .card.bg-white(id="Cuadro")
                 .card-body.p-5
                 
-                  form.mb-3.mt-md-4(action="/auth/forgot-password", method="post")
+                  form.mb-3.mt-md-4(action="solicitud", method="post")
+                    if message
+                      p#message(style='color: red;') #{message}
                     center
                       img(src="https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png", width="80")
                       br
