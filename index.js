@@ -66,6 +66,10 @@ app.get('/registrarse', (req, res) => {
     res.render('registrarse');
 });
 
+app.get('/contacto', (req, res) => {
+    res.render('contacto')
+})
+
 // Define tus rutas aquí
 // Define isAuthenticated como un middleware
 const isAuthenticated = (req, res, next) => {
