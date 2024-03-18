@@ -4,7 +4,7 @@ import { pool } from "../src/mysql.conector.js";
 export const insertarCompra = async (num, color, fecha, pesoe, userId, propietario) => {
     try {
         const fechaObj = new Date(fecha);
-        fechaObj.setDate(fechaObj.getDate() + 1);
+        
 
         // Formatear la fecha en español
         const opcionesFecha = {
@@ -84,7 +84,7 @@ export const getComByuserId = async (num, dueno) => {
 export const insertarSalida_Compra = async (  id_compra, num, color, fechac, fechas, pesoe, pesos, csalida, propietario, observacion, dueno ) => {
     try {
         const fechaObj = new Date(fechas);
-        fechaObj.setDate(fechaObj.getDate() + 1);
+        
 
         // Formatear la fecha en español
         const opcionesFecha = {

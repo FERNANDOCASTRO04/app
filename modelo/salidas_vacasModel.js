@@ -7,7 +7,7 @@ import { eliminarVacaPorNumero } from "./vacasModel.js";
 export const insertarSalida_vaca = async ( id_vaca, num_vaca, nombre_vaca, peso_final, fechas, propietario, csalida, observacion, dueno ) => {
     try {
       const fechaObj = new Date(fechas);
-      fechaObj.setDate(fechaObj.getDate() + 1);
+      
 
         // Formatear la fecha en español
       const opcionesFecha = {

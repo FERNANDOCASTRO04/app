@@ -5,7 +5,7 @@ import { eliminarAnimalPorNumero } from "./animalModel.js";
 export const insertarSalida = async ( id_ternero, num_ternero, sexo, peso_inicial, peso_final,propietario, edad, fechad, fechas, csalida, observacion, dueno ) => {
   try {
     const fechaObj = new Date(fechas);
-    fechaObj.setDate(fechaObj.getDate() + 1);
+    
 
         // Formatear la fecha en español
     const opcionesFecha = {

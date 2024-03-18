@@ -6,7 +6,7 @@ export const insertarAnimal = async (num_ternero, sexo, color, peso, madre, user
     try {
         // Convertir fecha a un objeto Date si no lo es
         const fechaObj = new Date(fecha);
-        fechaObj.setDate(fechaObj.getDate() + 1);
+        
 
         // Formatear la fecha en español
         const opcionesFecha = {

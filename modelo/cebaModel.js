@@ -4,7 +4,7 @@ export const insertarCeba = async (id_ternero, num_ternero, sexo, peso_inicial, 
     try {
         // Convertir fecha a un objeto Date si no lo es
         const fechaObj = new Date(fecha_destete);
-        fechaObj.setDate(fechaObj.getDate() + 1);
+        
 
         // Formatear la fecha en español
         const opcionesFecha = {
