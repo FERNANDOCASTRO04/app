@@ -2,9 +2,21 @@ import { pool } from "../src/mysql.conector.js";
 
 export const insertarCeba = async (id_ternero, num_ternero, sexo, peso_inicial, fecha_destete, madre_cria, userId, propietario, observacion, ) => {
     try {
+        // Convertir fecha a un objeto Date si no lo es
+        const fechaObj = new Date(fecha_destete);
+        fechaObj.setDate(fechaObj.getDate() + 1);
+
+        // Formatear la fecha en español
+        const opcionesFecha = {
+            weekday: 'long', // día de la semana (Lunes)
+            day: 'numeric', // día del mes (18)
+            month: 'long', // nombre del mes (marzo)
+            year: 'numeric' // año (2024)
+        };
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
       // Insertar la salida en la base de datos
       const query = 'INSERT INTO `terneros_seva` (`id_ter`, `num_ternero`, `sexo`,  `peso_inicial`, `fecha_destete`, `madre_cria`, `dueno`, `propietario`, `observacion`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
-      const queryResult = await pool.query(query, [id_ternero, num_ternero, sexo, peso_inicial, fecha_destete, madre_cria, userId, propietario, observacion]);
+      const queryResult = await pool.query(query, [id_ternero, num_ternero, sexo, peso_inicial, fechaFormateada, madre_cria, userId, propietario, observacion]);
         console.log(queryResult);
       // Verificar que queryResult tenga una propiedad insertId
     } catch (error) {

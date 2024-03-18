@@ -3,9 +3,20 @@ import { pool } from "../src/mysql.conector.js";
 
 export const insertarCompra = async (num, color, fecha, pesoe, userId, propietario) => {
     try {
+        const fechaObj = new Date(fecha);
+        fechaObj.setDate(fechaObj.getDate() + 1);
+
+        // Formatear la fecha en español
+        const opcionesFecha = {
+            weekday: 'long', // día de la semana (Lunes)
+            day: 'numeric', // día del mes (18)
+            month: 'long', // nombre del mes (marzo)
+            year: 'numeric' // año (2024)
+        };
+      const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
         const query = 'INSERT INTO compras (id_compra, num_ternero, color, fecha_compra, peso_entrada,  dueno, propietario) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-        const queryResult = await pool.query(query, [null,num, color, fecha, pesoe, userId, propietario]);
+        const queryResult = await pool.query(query, [null,num, color, fechaFormateada, pesoe, userId, propietario]);
             console.log(queryResult);
         // Verificamos que queryResult tenga una propiedad insertId
         if (queryResult && queryResult!== undefined) {
@@ -72,9 +83,20 @@ export const getComByuserId = async (num, dueno) => {
 
 export const insertarSalida_Compra = async (  id_compra, num, color, fechac, fechas, pesoe, pesos, csalida, propietario, observacion, dueno ) => {
     try {
+        const fechaObj = new Date(fechas);
+        fechaObj.setDate(fechaObj.getDate() + 1);
+
+        // Formatear la fecha en español
+        const opcionesFecha = {
+            weekday: 'long', // día de la semana (Lunes)
+            day: 'numeric', // día del mes (18)
+            month: 'long', // nombre del mes (marzo)
+            year: 'numeric' // año (2024)
+        };
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
       // Insertar la salida en la base de datos
       const query = 'INSERT INTO `salidas_compras` (`id_compra`, `num_ternero`, `color`, `fecha_compra`, `fecha_salida`, `peso_entrada`, `peso_salida`, `causa_salida`,`propietario`, `observacion`, `dueno`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-      const queryResult = await pool.query(query, [ id_compra, num, color, fechac, fechas, pesoe, pesos, csalida, propietario, observacion, dueno]);
+      const queryResult = await pool.query(query, [ id_compra, num, color, fechac, fechaFormateada, pesoe, pesos, csalida, propietario, observacion, dueno]);
       // Verificar que queryResult tenga una propiedad insertId
       console.log(queryResult);
       if (queryResult && queryResult) {

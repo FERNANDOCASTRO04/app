@@ -1,14 +1,30 @@
 // animalModel.js
 import { pool } from '../src/mysql.conector.js';
 
+
 export const insertarAnimal = async (num_ternero, sexo, color, peso, madre, userId, propietario, fecha, observaciones) => {
     try {
+        // Convertir fecha a un objeto Date si no lo es
+        const fechaObj = new Date(fecha);
+        fechaObj.setDate(fechaObj.getDate() + 1);
+
+        // Formatear la fecha en español
+        const opcionesFecha = {
+            weekday: 'long', // día de la semana (Lunes)
+            day: 'numeric', // día del mes (18)
+            month: 'long', // nombre del mes (marzo)
+            year: 'numeric' // año (2024)
+        };
+        const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
+
         const query = 'INSERT INTO terneros (id_ternero, num_ternero, sexo, color_cria, peso_nacimiento, madre_cria, dueno, propietario, fecha_nacimiento, observaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?)';
 
-        const queryResult = await pool.query(query, [null, num_ternero, sexo, color, peso, madre, userId, propietario, fecha, observaciones]);
-            console.log(queryResult);
+        const queryResult = await pool.query(query, [null, num_ternero, sexo, color, peso, madre, userId, propietario, fechaFormateada, observaciones]);
+        
+        console.log(queryResult);
+
         // Verificamos que queryResult tenga una propiedad insertId
-        if (queryResult && queryResult!== undefined) {
+        if (queryResult && queryResult) {
             const nuevoAnimalId = queryResult;
             return nuevoAnimalId;
         } else {

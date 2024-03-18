@@ -86,7 +86,7 @@ html
                   th(scope="col") #
                   th(scope="col") N* Ternero
                   th(scope="col") Peso Inicial (KG)
-                  
+                  th(scope="col") Fecha del Destete
                   th(scope="col") Madre de Cria
                   th(escope="col") Propietario
                   th(scope="col") Observacion
@@ -98,6 +98,7 @@ html
                     th(scope="row")= contador++
                     td= ceba.num_ternero
                     td= ceba.peso_inicial
+                    td= ceba.fecha_destete
                     td= `${ceba.num_vaca} - ${ceba.nombre_madre}`
                     td= ceba.propietario
                     td= ceba.observacion
