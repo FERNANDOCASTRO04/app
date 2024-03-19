@@ -80,6 +80,9 @@ html
                 .message-container
                   // Renderiza el mensaje aquí
                   p= message
+                input(type="text" id="searchInput" placeholder="Buscar...")
+
+
                 table#animalesTable.table.table-responsive.table-sm.table-striped.table-bordered.table-hover.text-center.container-flex.mt-5
                   thead
                     tr
@@ -395,3 +398,22 @@ html
                   }
                 });
               });
+            script. 
+              document.addEventListener('DOMContentLoaded', function () {
+                  const searchInput = document.getElementById('searchInput');
+                  const tableRows = document.querySelectorAll('#animalesTable tbody tr');
+
+                  searchInput.addEventListener('input', function () {
+                      const searchText = searchInput.value.trim().toLowerCase();
+
+                      tableRows.forEach(row => {
+                          const rowData = row.textContent.trim().toLowerCase();
+                          if (rowData.includes(searchText)) {
+                              row.style.display = '';
+                          } else {
+                              row.style.display = 'none';
+                          }
+                      });
+                  });
+              });
+         

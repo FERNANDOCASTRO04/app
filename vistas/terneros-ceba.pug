@@ -80,6 +80,7 @@ html
                 div.overlay-container
                   div.overlay
                   div.dialog-box
+            input(type="text" id="searchInput" placeholder="Buscar...")
             table#desteteTable.table.table-responsive.table-sm.table-striped.table-bordered.table-hover.text-center.container-flex.mt-2
               thead
                 tr
@@ -285,3 +286,22 @@ html
                 });
               });
             });
+          script. 
+              document.addEventListener('DOMContentLoaded', function () {
+                  const searchInput = document.getElementById('searchInput');
+                  const tableRows = document.querySelectorAll('#desteteTable tbody tr');
+
+                  searchInput.addEventListener('input', function () {
+                      const searchText = searchInput.value.trim().toLowerCase();
+
+                      tableRows.forEach(row => {
+                          const rowData = row.textContent.trim().toLowerCase();
+                          if (rowData.includes(searchText)) {
+                              row.style.display = '';
+                          } else {
+                              row.style.display = 'none';
+                          }
+                      });
+                  });
+              });
+            
