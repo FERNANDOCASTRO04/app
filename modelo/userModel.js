@@ -58,15 +58,15 @@ const getUserById = async (userId) => {
     });
 };
 //AUTENTICADOR DE USUARIO
-const authenticateUser = async (nom_usuario, contrasena) => {
+const authenticateUser = async (email, contrasena) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) {
                 reject(err);
             }
 
-            const query = 'SELECT id, contrasena FROM usuarios WHERE nom_usuario = ?';
-            connection.query(query, [nom_usuario], async (err, results) => {
+            const query = 'SELECT id, nom_usuario, contrasena FROM usuarios WHERE correo = ?';
+            connection.query(query, [email], async (err, results) => {
                 connection.release();
 
                 if (err) {
@@ -75,11 +75,13 @@ const authenticateUser = async (nom_usuario, contrasena) => {
 
                 if (results.length > 0) {
                     const userId = results[0].id;
+                    const nombreUsuario = results[0].nom_usuario; // Definir nombreUsuario aquí
+                    console.log(nombreUsuario);
                     const storedPassword = results[0].contrasena;
                     const passwordMatch = await bcrypt.compare(contrasena, storedPassword);
 
                     if (passwordMatch) {
-                        resolve(userId);
+                        resolve({ userId, nombreUsuario }); // Resuelve un objeto que contiene userId y nombreUsuario
                     } else {
                         reject('Contraseña incorrecta');
                     }

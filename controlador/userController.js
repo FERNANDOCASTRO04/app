@@ -29,22 +29,22 @@ export const createUser = async (req, res) => {
 };
 //INICIAR SESION
 const loginUser = async (req, res) => {
-    const { nom_usuario, contrasena } = req.body;
+    const { email, contrasena } = req.body;
 
     try {
-        const userId = await userModel.authenticateUser(nom_usuario, contrasena);
+        const { userId, nombreUsuario } = await userModel.authenticateUser(email, contrasena); // Obtener nombreUsuario desde authenticateUser
 
-        // Almacenar el id del usuario en la sesión
+        // Almacenar el id del usuario y el nombre en la sesión
         req.session.authenticated = true;
         req.session.userId = userId;
-        req.session.nom_usuario = nom_usuario;
+        req.session.nom_usuario = nombreUsuario; // Almacena el nombre de usuario en la sesión
+        req.session.email = email;
 
         console.log('Inicio de sesión exitoso');
         res.redirect('/paginaprincipal');
     } catch (error) {
         console.error('Error al verificar el usuario e iniciar sesión: ' + error);
         res.render('login', { message: '' + error });
-        
     }
 };
 
