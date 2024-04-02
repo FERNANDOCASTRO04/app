@@ -32,21 +32,35 @@ const loginUser = async (req, res) => {
     const { email, contrasena } = req.body;
 
     try {
-        const { userId, nombreUsuario } = await userModel.authenticateUser(email, contrasena); // Obtener nombreUsuario desde authenticateUser
+        const userData = await userModel.authenticateUser(email, contrasena); // Llama a authenticateUser directamente
 
-        // Almacenar el id del usuario y el nombre en la sesión
+        // Almacenar la información del usuario en la sesión
         req.session.authenticated = true;
-        req.session.userId = userId;
-        req.session.nom_usuario = nombreUsuario; // Almacena el nombre de usuario en la sesión
+        req.session.userId = userData.userId;
+        req.session.nombreUsuario = userData.nombreUsuario; // Almacena el nombre de usuario en la sesión
         req.session.email = email;
+        
+        // Verificar si el usuario es administrador y establecer la variable de sesión correspondiente
+        if (userData.isAdmin) {
+            req.session.isAdmin = true;
+        } else {
+            req.session.isAdmin = false;
+        }
 
-        console.log('Inicio de sesión exitoso');
-        res.redirect('/paginaprincipal');
+        // Ahora puedes verificar si es administrador y redirigir según el rol
+        if (userData.isAdmin) {
+            console.log('Inicio de sesión exitoso para el administrador');
+            res.render('paginadmin', { nombreUsuario: req.session.nombreUsuario });
+        } else {
+            console.log('Inicio de sesión exitoso');
+            res.render('paginaprincipal', { nombreUsuario: req.session.nombreUsuario, isAdmin: req.session.isAdmin });
+        }
     } catch (error) {
         console.error('Error al verificar el usuario e iniciar sesión: ' + error);
         res.render('login', { message: '' + error });
     }
 };
+
 
 //MOSTAR ANIMALES
 const mostrarAnimales = async (req, res) => {
@@ -139,6 +153,29 @@ const resetPassword = async (req, res) => {
     }
 };
 
+const mostrarUsuarios = async (req, res) => {
+    try {
+        // Llama al modelo para obtener todos los usuarios registrados
+        const usuarios = await userModel.getUsers();
+
+        // Renderiza la vista con los resultados
+        console.log(usuarios);
+        if (res && res.render) {
+            res.render('usuarios', { usuarios, nombreUsuario: req.session.nombreUsuario });
+        } else {
+            console.error('La variable res no está definida o no tiene la propiedad render');
+        }
+        return usuarios;
+    } catch (error) {
+        if (res && res.status) {
+            res.status(500).send('Error interno del servidor' + error);
+        } else {
+            console.error('La variable res no está definida o no tiene la propiedad status');
+        }
+    }
+};
 
 
-export { mostrarAnimales, loginUser, requestPasswordReset, sendPasswordResetEmail, resetPassword };
+
+
+export { mostrarAnimales, loginUser, mostrarUsuarios, requestPasswordReset, sendPasswordResetEmail, resetPassword };

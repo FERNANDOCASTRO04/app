@@ -1,0 +1,53 @@
+doctype html
+html
+
+  head
+    title Agrofer
+    link(rel="stylesheet", href="/styles.css")
+    link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", rel="stylesheet")
+
+  body(style="min-height: 100vh; background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
+    .container-fluid.overflow-hidden
+        .row.vh-100.overflow-auto
+          .col-6.col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.d-flex.sticky-top
+            .d-flex.flex-sm-column.flex-row.flex-grow-1.align-items-center.align-items-sm-start.px-3.pt-2.text-white
+              a(href='#', class='d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none')
+                span.fs-5 A
+                span.d-none.d-sm-inline grofer
+                img(src='https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+              ul.nav.nav-pills.flex-sm-column.flex-row.flex-nowrap.flex-shrink-1.flex-sm-grow-0.flex-grow-1.mb-sm-auto.mb-0.justify-content-center.align-items-center.align-items-sm-start#menu
+               
+                    
+                  .dropdown.py-sm-4.mt-sm-auto.ms-auto.ms-sm-0.flex-shrink-1
+                    a(href='#', class='d-flex align-items-center text-white text-decoration-none dropdown-toggle', id='dropdownUser1', data-bs-toggle='dropdown', aria-expanded='false')
+                      img(src='https://cdn-icons-png.flaticon.com/512/219/219983.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+                      span.d-none.d-sm-inline.mx-1()= nombreUsuario
+                    ul.dropdown-menu.dropdown-menu-dark.text-small.shadow(aria-labelledby='dropdownUser1')
+                      li
+                        a.dropdown-item(href='#') Cambiar Contraseña
+                      li
+                        hr.dropdown-divider
+                      li
+                        a.dropdown-item(href='/logout') Cerrar sesion  
+                          
+          .col-6.d-flex.flex-column.h-sm-100
+            .row
+              .col-12.col-sm-9.col-xl-10.px-sm-4.d-flex
+                div.col-5.mb-5.mt-5
+                  a(href="/paginaprincipal")
+                    button.btn.btn-with-image
+                      img(src="https://www.ica.gov.co/CMSPages/GetFile.aspx?guid=f61cc155-02c2-4de3-be34-112976983c9d", alt="Animales")
+                      h5 Cliente
+                form(id="usuariosForm", action="/usuarios", method="post")
+                  div.col-5.lg-3.mb-5.mt-5
+                    a(href="/usuarios")
+                      button.btn.btn-with-image.btn
+                        img(src="https://certifiedhumanelatino.org/wp-content/uploads/2022/08/CERTIFIED-HUMANE_Post-blog-1.jpg ", alt="agregaranimal")
+                        h6 Usuarios
+                  
+            
+
+            script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL", crossorigin="anonymous")
+

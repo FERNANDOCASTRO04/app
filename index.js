@@ -18,7 +18,9 @@ import { getCompraByUserId } from './modelo/compraModel.js'
 import * as salidas_vacasController from './controlador/salidas_vacasController.js'
 import { getSalidasVacasByUserId } from './modelo/salidas_vacasModel.js'
 import { getSalidasComprasByUserId } from './modelo/compraModel.js'
+import {getUsers} from './modelo/userModel.js'
 import { PORT } from './src/config.js'
+
 import * as authController from './controlador/authController.js'
 
 
@@ -86,18 +88,18 @@ const isAuthenticated = (req, res, next) => {
 app.get('/paginaprincipal', isAuthenticated, (req, res) => {
     const maxAge = req.session.cookie.maxAge;
     console.log('Tiempo de vida de la sesión en milisegundos:', maxAge);
-    const nombreUsuario = req.session.nom_usuario
+    
 
-    res.render('paginaprincipal', { nombreUsuario: nombreUsuario });
+    res.render('paginaprincipal',  { nombreUsuario: req.session.nombreUsuario, isAdmin: req.session.isAdmin });
 });
 
 
 app.get('/animales', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+  
     try {
         const userId = req.session.userId;
         const animales = await getAnimalesByUserId(userId); // Aquí usamos la función directamente
-        res.render('animales', { nombreUsuario: nombreUsuario, animales: animales });
+        res.render('animales', {  nombreUsuario: req.session.nombreUsuario , animales: animales });
     } catch (error) {
         console.error('Error al obtener animales:', error);
         res.status(500).send('Error interno del servidor');
@@ -126,11 +128,11 @@ app.get('/logout', isAuthenticated,  (req, res) => {
 
   // Ruta para agregar un animal asociado al usuario
 app.get('/agregaranimal', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+    
     try {
         const userId = req.session.userId;
         const vacas = await getVacasByUserId(userId); // Aquí usamos la función directamente
-        res.render('agregaranimal', { vacas, nombreUsuario: nombreUsuario });
+        res.render('agregaranimal', { vacas,  nombreUsuario: req.session.nombreUsuario  });
     } catch (error) {
         console.error('Error al obtener vacas:', error);
         res.status(500).send('Error interno del servidor');
@@ -139,8 +141,8 @@ app.get('/agregaranimal', isAuthenticated, async (req, res) => {
 
 
 app.get('/agregarvacas', isAuthenticated, (req, res) => {
-    const nombreUsuario = req.session.nom_usuario
-    res.render('agregarvacas', { nombreUsuario: nombreUsuario });
+   
+    res.render('agregarvacas', { nombreUsuario: req.session.nombreUsuario });
 });
   
 app.get('/vacas', isAuthenticated, async (req, res) => {
@@ -148,19 +150,30 @@ app.get('/vacas', isAuthenticated, async (req, res) => {
     try {
         const userId = req.session.userId;
         const vacas = await getVacasByUserId(userId); // Aquí usamos la función directamente
-        res.render('vacas', { nombreUsuario: nombreUsuario, vacas: vacas });
+        res.render('vacas', { nombreUsuario: req.session.nombreUsuario , vacas: vacas });
     } catch (error) {
         console.error('Error al obtener vacas:', error);
         res.status(500).send('Error interno del servidor');
     }
 });
 
+// Definición de la ruta para la vista paginadmin
+app.get('/paginadmin', (req, res) => {
+    if (req.session.authenticated && req.session.isAdmin) {
+        res.render('paginadmin', { nombreUsuario: req.session.nombreUsuario });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
+
 app.get('/salidas', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+    
     try {
         const userId = req.session.userId;
         const salidas = await getSalidassByUserId(userId); // Aquí usamos la función directamente
-        res.render('salidas', { nombreUsuario: nombreUsuario, salidas: salidas });
+        res.render('salidas', {nombreUsuario: req.session.nombreUsuario , salidas: salidas });
     } catch (error) {
         console.error('Error al obtener salidas:', error);
         res.status(500).send('Error interno del servidor');
@@ -168,11 +181,11 @@ app.get('/salidas', isAuthenticated, async (req, res) => {
 })
 
 app.get('/agregarsalida', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+
     try {
         const userId = req.session.userId;
         const salidas = await getAnimalesByUserId(userId);
-        res.render('agregarsalida', { nombreUsuario: nombreUsuario, salidas: salidas});
+        res.render('agregarsalida', { nombreUsuario: req.session.nombreUsuario , salidas: salidas});
     }catch (error) { 
         console.error('error al agregar salida:', error );
     }
@@ -192,11 +205,11 @@ app.get('/agregarsalida', isAuthenticated, async (req, res) => {
 
 
 app.get('/terneros-ceba', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+
     try {
         const userId = req.session.userId;
         const cebas = await getCebaByUserId(userId); // Aquí usamos la función directamente
-        res.render('terneros-ceba', { nombreUsuario: nombreUsuario, cebas: cebas });
+        res.render('terneros-ceba', { nombreUsuario: req.session.nombreUsuario , cebas: cebas });
     } catch (error) {
         console.error('Error al obtener salidas:', error);
         res.status(500).send('Error interno del servidor');
@@ -205,43 +218,40 @@ app.get('/terneros-ceba', isAuthenticated, async (req, res) => {
 });
 
 app.get('/terneroscompra', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+  
     try {
         const userId = req.session.userId;
         const compras = await getCompraByUserId(userId); // Aquí usamos la función directamente
-        res.render('terneroscompra', { nombreUsuario: nombreUsuario, compras: compras });
+        res.render('terneroscompra', { nombreUsuario: req.session.nombreUsuario , compras: compras });
     } catch (error) {
         console.error('Error al obtener animales:', error);
         res.status(500).send('Error interno del servidor');
     }
 });
 app.get('/agregarternerocompra', isAuthenticated , (req, res) => {
-    const nombreUsuario = req.session.nom_usuario
-    res.render('agregarternerocompra', { nombreUsuario: nombreUsuario });
+    
+    res.render('agregarternerocompra', { nombreUsuario: req.session.nombreUsuario });
 });
 
-app.get('/salidas_vacas', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
-    try {
-        const userId = req.session.userId;
-        const salidas_vacas = await getSalidasVacasByUserId(userId); // Aquí usamos la función directamente
-        res.render('salidas_vacas', { nombreUsuario: nombreUsuario, salidas_vacas: salidas_vacas });
-    } catch (error) {
-        console.error('Error al obtener salidas:', error);
-        res.status(500).send('Error interno del servidor');
-    }
-});
+
 
 app.get('/salidas_compras', isAuthenticated, async (req, res) => {
-    const nombreUsuario = req.session.nom_usuario;
+ 
     try {
         const userId = req.session.userId;
         const salidas_compras = await getSalidasComprasByUserId(userId); // Aquí usamos la función directamente
-        res.render('salidas_compras', { nombreUsuario: nombreUsuario, salidas_compras: salidas_compras });
+        res.render('salidas_compras', { nombreUsuario: req.session.nombreUsuario , salidas_compras: salidas_compras });
     } catch (error) {
         console.error('Error al obtener salidas:', error);
         res.status(500).send('Error interno del servidor');
     }
+});
+
+
+
+
+app.get('/usuarios', isAuthenticated, async (req, res) => {
+    res.render('usuarios')
 });
 
 
@@ -312,6 +322,11 @@ app.post('/agregaranimal', isAuthenticated, animalController.insertarAnimal, (re
 app.post('/agregarterneroseva', isAuthenticated, cebaController.insertarCeba, (req, res) => {
     res.redirect('/terneros-ceba');
 });
+
+app.post('/usuarios', isAuthenticated, userController.mostrarUsuarios, (req, res) => {
+    res.redirect('/usuarios')
+} );
+
 
 app.post('/solicitud', userController.requestPasswordReset)
 

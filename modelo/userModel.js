@@ -65,7 +65,7 @@ const authenticateUser = async (email, contrasena) => {
                 reject(err);
             }
 
-            const query = 'SELECT id, nom_usuario, contrasena FROM usuarios WHERE correo = ?';
+            const query = 'SELECT id, nom_usuario, contrasena, rol FROM usuarios WHERE correo = ?';
             connection.query(query, [email], async (err, results) => {
                 connection.release();
 
@@ -75,13 +75,21 @@ const authenticateUser = async (email, contrasena) => {
 
                 if (results.length > 0) {
                     const userId = results[0].id;
-                    const nombreUsuario = results[0].nom_usuario; // Definir nombreUsuario aquí
-                    console.log(nombreUsuario);
+                    const nombreUsuario = results[0].nom_usuario;
                     const storedPassword = results[0].contrasena;
+                    const userRole = results[0].rol;
+
                     const passwordMatch = await bcrypt.compare(contrasena, storedPassword);
 
                     if (passwordMatch) {
-                        resolve({ userId, nombreUsuario }); // Resuelve un objeto que contiene userId y nombreUsuario
+                        // Ahora, en función del rol del usuario, puedes determinar las acciones que puede realizar
+                        if (userRole === 'admin') {
+                            // Si es un administrador, puedes devolver un objeto que indique que es admin
+                            resolve({ userId, nombreUsuario, isAdmin: true });
+                        } else {
+                            // Si no es admin, devuelves simplemente el userId y nombreUsuario
+                            resolve({ userId, nombreUsuario });
+                        }
                     } else {
                         reject('Contraseña incorrecta');
                     }
@@ -92,6 +100,7 @@ const authenticateUser = async (email, contrasena) => {
         });
     });
 };
+
 
 //BUSCAR ANIMAL POR EL ID DEL USUARIO QUE HA INICIADO SESION 
 const getAnimalesByUserId = async (userId) => {
@@ -252,6 +261,20 @@ const getUserByResetToken = async (correo, resetToken) => {
         });
     });
 };
+const getUsers = async () => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM usuarios`;
+
+        pool.query(query, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+};
+
 
 
 
@@ -262,4 +285,4 @@ const getUserByResetToken = async (correo, resetToken) => {
 export { getUserById, authenticateUser, getAnimalesByUserId, getUserByEmail,
     generateResetToken,
     resetPassword,
-    getUserByResetToken };
+    getUserByResetToken, getUsers };

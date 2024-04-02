@@ -19,7 +19,14 @@ html
                 img(src='https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
               ul.nav.nav-pills.flex-sm-column.flex-row.flex-nowrap.flex-shrink-1.flex-sm-grow-0.flex-grow-1.mb-sm-auto.mb-0.justify-content-center.align-items-center.align-items-sm-start#menu
                 li.nav-item
-               
+                  if isAdmin
+                    a.nav-link.px-sm-0.px-2(href="/paginadmin")
+                      i.fs-5.bi-house
+                      span.ms-1.d-none.d-sm-inline Vista Admin
+                  else
+                    a.nav-link.px-sm-0.px-2(href="#") 
+
+                
                     
                   .dropdown.py-sm-4.mt-sm-auto.ms-auto.ms-sm-0.flex-shrink-1
                     a(href='#', class='d-flex align-items-center text-white text-decoration-none dropdown-toggle', id='dropdownUser1', data-bs-toggle='dropdown', aria-expanded='false')
