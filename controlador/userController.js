@@ -1,4 +1,5 @@
 // userController.js
+import JSONTransport from 'nodemailer/lib/json-transport/index.js';
 import * as userModel from '../modelo/userModel.js';
 import nodemailer from 'nodemailer';
 
@@ -175,7 +176,28 @@ const mostrarUsuarios = async (req, res) => {
     }
 };
 
+const editarRol = async (req, res) => {
+    try {
+        const {rol, estado, id } = req.body;
+        console.log('Esto es lo que viene del body: ', req.body )
+
+        const edicionExitosa = await userModel.updaterol(rol, estado, id);
+
+        if (edicionExitosa) {
+            const usuarios = await userModel.getUsers();
+            console.log('Rol asignado correctamente');
+            res.render('usuarios', {usuarios, nombreUsuario: req.session.nombreUsuario});
+        } else {
+          
+        }
+    } catch (error) {
+        console.error('Error al asignar rol:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+};
 
 
 
-export { mostrarAnimales, loginUser, mostrarUsuarios, requestPasswordReset, sendPasswordResetEmail, resetPassword };
+
+
+export { mostrarAnimales, loginUser, mostrarUsuarios, requestPasswordReset, sendPasswordResetEmail, resetPassword, editarRol };
