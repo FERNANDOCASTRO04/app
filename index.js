@@ -327,6 +327,10 @@ app.post('/usuarios', isAuthenticated, userController.mostrarUsuarios, (req, res
     res.redirect('/usuarios')
 } );
 
+app.post('/editarRol', isAuthenticated, userController.editarRol, (req, res) => {
+    res.redirect('usuarios')
+});
+
 
 app.post('/solicitud', userController.requestPasswordReset)
 
