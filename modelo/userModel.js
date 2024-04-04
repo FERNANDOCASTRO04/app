@@ -65,7 +65,7 @@ const authenticateUser = async (email, contrasena) => {
                 reject(err);
             }
 
-            const query = 'SELECT id, nom_usuario, contrasena, rol, estado FROM usuarios WHERE correo = ?';
+            const query = 'SELECT id, nom_usuario, contrasena, rol FROM usuarios WHERE correo = ?';
             connection.query(query, [email], async (err, results) => {
                 connection.release();
 
@@ -78,13 +78,8 @@ const authenticateUser = async (email, contrasena) => {
                     const nombreUsuario = results[0].nom_usuario;
                     const storedPassword = results[0].contrasena;
                     const userRole = results[0].rol;
-                    const cuentaState = results[0].estado;
 
-                    if (cuentaState === 'bloqueada') {
-                        reject('La cuenta está bloqueada. Por favor, contacta al administrador para obtener ayuda.');
-                        return;
-                    } else {
-                        const passwordMatch = await bcrypt.compare(contrasena, storedPassword);
+                    const passwordMatch = await bcrypt.compare(contrasena, storedPassword);
 
                     if (passwordMatch) {
                         // Ahora, en función del rol del usuario, puedes determinar las acciones que puede realizar
@@ -98,9 +93,6 @@ const authenticateUser = async (email, contrasena) => {
                     } else {
                         reject('Contraseña incorrecta');
                     }
-                    }
-
-                    
                 } else {
                     reject('Usuario no encontrado');
                 }
@@ -282,27 +274,6 @@ const getUsers = async () => {
         });
     });
 };
-const updaterol = async (rol, estado, id ) => {
-    const query = 'UPDATE usuarios SET rol = ?, estado = ? WHERE usuarios.id = ?';
-
-    try {
-        console.log('Consulta SQL:', query);
-        console.log('Valores:', [rol, estado, id]);
-        
-        const queryResult = await pool.query(query, [ rol, estado, id]);
-        console.log(queryResult);
-        if (queryResult.affectedRows > 0) {
-            return true; // Éxito al asignar rol
-        } else {
-            console.log('Rol asignado correctamente');
-            return true; // No se encontró el animal con el número de ternero especificado
-        }
-    } catch (error) {
-        console.error('Error al asignar rol:', error);
-        throw error;
-    }
-};
-
 
 
 
@@ -314,4 +285,4 @@ const updaterol = async (rol, estado, id ) => {
 export { getUserById, authenticateUser, getAnimalesByUserId, getUserByEmail,
     generateResetToken,
     resetPassword,
-    getUserByResetToken, getUsers, updaterol };
+    getUserByResetToken, getUsers };

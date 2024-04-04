@@ -92,7 +92,6 @@ html
                       th(scope="col") Nombre De Usuario
                       th(scope="col") Correo
                       th(scope="col") Rol
-                      th(scope="col") Estado De La Cuenta
                       th(scope="col") 
                    
                   tbody.table-group-divider.alin
@@ -104,9 +103,8 @@ html
                       td= usuario.nom_usuario 
                       td= usuario.correo 
                       td= usuario.rol
-                      td= usuario.estado
                       td  
-                        button.btn.btn-warning(type="button", class="btnCebaCompra", onclick=`showDialog('editar', '${usuario.id}', '${usuario.nom_usuario}', '${usuario.correo}', '${usuario.rol}', '${usuario.estado}')`) 
+                        button.btn.btn-warning(type="button", class="btnCebaCompra", onclick=`showDialog('editar', '${usuario.id}', '${usuario.nom_usuario}', '${usuario.correo}', '${usuario.rol}')`) 
                           span.material-icons edit
                           
                         button.btn.btn-danger(type="button", class="btnCebaCompra", onclick=`showDialog('eliminar', '${usuario.id}', '${usuario.nom_usuario}', '${usuario.correo}', '${usuario.rol}')`) 
@@ -122,7 +120,7 @@ html
               
 
             script.
-                function showDialog(tipo, id, nom_usuario, correo, rol, estado) {
+                function showDialog(tipo, id, nom_usuario, correo, rol) {
                   const overlayContainer = document.querySelector('.overlay-container');
                   const dialogBox = document.querySelector('.dialog-box');
 
@@ -139,7 +137,7 @@ html
                   if (tipo === 'editar') {
                       formHTML = `
                           
-                      <form class="row g-3" action="/editarRol" method="POST">
+                      <form class="row g-3" action="/agregarterneroseva" method="POST">
                         <div class="col-md-6">
                           <div class="form-group">
                             <b><label class="form-label" for="id">Id del Usuario</label></b>
@@ -160,25 +158,9 @@ html
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                            <b>
-                            <label class="form-label" for="rol">Asignar Rol</label>
-                            <select class="form-control" name="rol" required>
-                              <option value='${rol}' >${rol}</option>
-                              <option value="admin">admin</option>
-                              <option value="user">user</option>
-                            </select>
-                          </div></b>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <b>
-                            <label class="form-label" for="estado">Cambiar Estado De La Cuenta</label>
-                            <select class="form-control" name="estado" required>
-                              <option value="" >El estado actual es: ${estado}</option>
-                              <option value="activa">activa</option>
-                              <option value="bloqueada">bloqueada</option>
-                            </select>
-                          </div></b>
+                            <b><label class="form-label" for="rol">Rol</label></b>
+                            <input type="text" class="form-control" name="rol" value="${rol}" >
+                          </div>
                         </div>
                         <div class="row text-center">
                         <div class="col-6, mt-2">
