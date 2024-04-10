@@ -1,26 +1,25 @@
 doctype html
-html
-
+html(lang="en")
   head
     title Agregar Vaca
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css")
     link(rel="stylesheet", href="/styles.css")
     link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png")
-    link(integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", rel="stylesheet")
-
   body(style="min-height: 100vh; background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
     .container-fluid.overflow-hidden
-        .row.vh-100.overflow-auto
-          .col-2.col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.d-flex.sticky-top
-            .d-flex.flex-sm-column.flex-row.flex-grow-1.align-items-center.align-items-sm-start.px-3.pt-2.text-white
-              a(href='#', class='d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none')
-                span.fs-5 A
-                span.d-none.d-sm-inline grofer
-                img(src='https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
-              ul.nav.nav-pills.flex-sm-column.flex-row.flex-nowrap.flex-shrink-1.flex-sm-grow-0.flex-grow-1.mb-sm-auto.mb-0.justify-content-center.align-items-center.align-items-sm-start#menu
-                li.nav-item
-                  a.nav-link.px-sm-0.px-2(href="/paginaprincipal")
-                    i.fs-5.bi-house
-                    span.ms-1.d-none.d-sm-inline Pagina Principal
+      .row.vh-100.overflow-auto
+        .col-12.col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.d-flex.sticky-top
+          .d-flex.flex-sm-column.flex-row.flex-grow-1.align-items-center.align-items-sm-start.px-3.pt-2.text-white
+            a(href='#', class='d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none')
+              span.fs-5 A
+              span.d-none.d-sm-inline grofer
+              img(src='https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
+            ul.nav.nav-pills.flex-sm-column.flex-row.flex-nowrap.flex-shrink-1.flex-sm-grow-0.flex-grow-1.mb-sm-auto.mb-0.justify-content-center.align-items-center.align-items-sm-start#menu
+              li.nav-item
+                a.nav-link.px-sm-0.px-2(href="/paginaprincipal")
+                  i.fs-5.bi-house
+                  span.ms-1.d-none.d-sm-inline Pagina Principal
 
                   .dropdown.py-sm-4.mt-sm-auto.ms-auto.ms-sm-0.flex-shrink-1
                     a(href='#', class='d-flex align-items-center text-white text-decoration-none dropdown-toggle', id='dropdownUser1', data-bs-toggle='dropdown', aria-expanded='false')
@@ -33,61 +32,44 @@ html
                         hr.dropdown-divider
                       li
                         a.dropdown-item(href='/logout') Cerrar sesion      
-          .col.d-flex.flex-column.h-sm-100
-            .row.justify-content-center.align-items-center.vh-100
-              .col-12.col-sm-9.col-xl-10.px-sm-4.d-flex
-                form.row.g-3.mb-5.align-items-center(action="/agregarvaca", method="POST")
-                  .col-md-6
-                    .form-group
-                    b
-                      label.form-label(for="numvaca")  Numero de Vaca
-                      input(type="text", class="form-control", name="numvaca")
-                  .col-md-6
-                    .form-group
-                    b 
-                      label.form-label(for="nomvaca")  Nombre de la vaca
-                      input(type="text", class="form-control", name="nomvaca")
-                  .col-md-6
-                    .form-group
-                    b 
-                      label.form-label(for="propietario")  Propietario
-                      input(type="text", class="form-control", name="propietario")
-                  
-                  .col-md-6
-                    .form-group
-                    b 
-                      label.form-label(for="observacion")  Observaciones
-                      input(type="text", class="form-control", name="observacion")
-                  .row.justify-content-center.align-items-center
-                    .col-6.text-center
-                      button.btn.btn-primary.mt-2.aling-center(type="submit") Agregar Vaca 
-                      if message
-                        p#message(style='color: red;') #{message}
-            
-          
-
-          script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL", crossorigin="anonymous")
-          script.
-                // JavaScript para desplegar el menú al pasar el cursor por encima
-                document.addEventListener('DOMContentLoaded', function() {
-                  var botonDesplegable = document.getElementById('boton-desplegable');
-                  var menuDesplegable = document.getElementById('menu-desplegable');
-
-                  botonDesplegable.addEventListener('mouseover', function() {
-                    menuDesplegable.style.display = 'block';
-                  });
-
-                  botonDesplegable.addEventListener('mouseout', function() {
-                    menuDesplegable.style.display = 'none';
-                  });
-                });
-          script.
-            document.addEventListener('DOMContentLoaded', function() {
-              var messageElement = document.getElementById('message');
-              if (messageElement) {
-                setTimeout(function() {
-                  messageElement.style.opacity = '0';
-                }, 4000); // 3000 milisegundos = 3 segundos, ajusta según sea necesario
-              }
-            });
-          
+        .col.d-flex.flex-column.h-sm-100
+          .row.justify-content-center.align-items-center.vh-100
+            .col-12.col-sm-9.col-xl-10.px-sm-4.d-flex
+              form.row.g-3.mb-5.align-items-center(action="/agregarvaca", method="POST")
+                .col-md-6
+                  .form-group
+                  b
+                    label.form-label(for="numvaca")  Numero de Vaca
+                    input(type="text", class="form-control", name="numvaca")
+                .col-md-6
+                  .form-group
+                  b 
+                    label.form-label(for="nomvaca")  Nombre de la vaca
+                    input(type="text", class="form-control", name="nomvaca")
+                .col-md-6
+                  .form-group
+                  b 
+                    label.form-label(for="propietario")  Propietario
+                    input(type="text", class="form-control", name="propietario")
+                
+                .col-md-6
+                  .form-group
+                  b 
+                    label.form-label(for="observacion")  Observaciones
+                    input(type="text", class="form-control", name="observacion")
+                .row.justify-content-center.align-items-center
+                  .col-12.text-center
+                    button.btn.btn-primary.mt-2(type="submit") Agregar Vaca 
+                    if message
+                      p#message(style='color: red;') #{message}
+      
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js")
+    script.
+          document.addEventListener('DOMContentLoaded', function() {
+            var messageElement = document.getElementById('message');
+            if (messageElement) {
+              setTimeout(function() {
+                messageElement.style.opacity = '0';
+              }, 4000); // 3000 milisegundos = 3 segundos, ajusta según sea necesario
+            }
+          });

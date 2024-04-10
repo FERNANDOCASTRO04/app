@@ -1,16 +1,16 @@
 doctype html
-html
-
+html(lang="es")
   head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
     title Agregar ternero
     link(rel="stylesheet", href="/styles.css")
     link(rel="icon", type="image/x-icon", href="https://raw.githubusercontent.com/FERNANDOCASTRO04/app/main/public/imagenes/logo.png")
     link(integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN", crossorigin="anonymous", href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", rel="stylesheet")
-
   body(style="min-height: 100vh; background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://ruminants.ceva.pro/hubfs/mercado-de-ganado-1.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;")
     .container-fluid.overflow-hidden
       .row.vh-100.overflow-auto
-        .col-.col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.d-flex.sticky-top
+        .col-sm-3.col-xl-2.px-sm-2.px-0.bg-dark.sticky-top
           .d-flex.flex-sm-column.flex-row.flex-grow-1.align-items-center.align-items-sm-start.px-3.pt-2.text-white
             a(href='#', class='d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none')
               span.fs-5 A
@@ -21,7 +21,6 @@ html
                 a.nav-link.px-sm-0.px-2(href="/paginaprincipal")
                   i.fs-5.bi-house
                   span.ms-1.d-none.d-sm-inline Pagina Principal
-
                 .dropdown.py-sm-4.mt-sm-auto.ms-auto.ms-sm-0.flex-shrink-1
                   a(href='#', class='d-flex align-items-center text-white text-decoration-none dropdown-toggle', id='dropdownUser1', data-bs-toggle='dropdown', aria-expanded='false')
                     img(src='https://cdn-icons-png.flaticon.com/512/219/219983.png', alt='hugenerd', width='28', height='28', class='rounded-circle')
@@ -33,66 +32,59 @@ html
                       hr.dropdown-divider
                     li
                       a.dropdown-item(href='/logout') Cerrar sesion
-
-        .col.d-flex.flex-column.h-sm-100
+        .col.d-flex.flex-column
           .row.justify-content-center.align-items-center.vh-100
             .col-12.col-sm-9.col-xl-10.px-sm-4.d-flex 
               form.row.g-3.mb-5(action="/agregarternerocompra", method="POST")
                 .col-md-6
                   .form-group
-                  b 
-                    label.form-label(for="num")  Numero del ternero
-                    input(type="number", class="form-control", name="num", required)
-              
+                    b 
+                      label.form-label(for="num")  Numero del ternero
+                      input(type="number", class="form-control", name="num", required)
                 .col-md-6
                   .form-group
-                  b 
-                    label.form-label(for="color")  Color del Animal
-                    input(type="text", class="form-control", name="color", required)
+                    b 
+                      label.form-label(for="color")  Color del Animal
+                      input(type="text", class="form-control", name="color", required)
                 .col-md-6
                   .form-group
-                  b 
-                    label.form-label(for="fecha") Fecha de Entrada 
-                    input(type="date", class="form-control", name="fecha", required)  
+                    b 
+                      label.form-label(for="fecha") Fecha de Entrada 
+                      input(type="date", class="form-control", name="fecha", required)  
                 .col-md-6
                   .form-group
-                  b 
-                    label.form-label(for="pesoe")  Peso de entrada (Kg)
-                    input(type="number", class="form-control", name="pesoe", required)
-
+                    b 
+                      label.form-label(for="pesoe")  Peso de entrada (Kg)
+                      input(type="number", class="form-control", name="pesoe", required)
                 .col-md-6
                   .form-group
-                  b 
-                    label.form-label(for="propietario")  Propietario
-                    input(type="text", class="form-control", name="propietario")
-                  
+                    b 
+                      label.form-label(for="propietario")  Propietario
+                      input(type="text", class="form-control", name="propietario")
                 .col-12.text-center
                   button.btn.btn-primary(type="submit") Agregar Animal
                   if message
-                      p#message(style='color: red;') #{message}
-        
+                    p#message(style='color: red;') #{message}
 
-            script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL", crossorigin="anonymous")
-            script.
-              // JavaScript para desplegar el menú al pasar el cursor por encima
-              document.addEventListener('DOMContentLoaded', function() {
-                var botonDesplegable = document.getElementById('boton-desplegable');
-                var menuDesplegable = document.getElementById('menu-desplegable');
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL", crossorigin="anonymous")
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      var botonDesplegable = document.getElementById('boton-desplegable');
+      var menuDesplegable = document.getElementById('menu-desplegable');
 
-                botonDesplegable.addEventListener('mouseover', function() {
-                  menuDesplegable.style.display = 'block';
-                });
+      botonDesplegable.addEventListener('mouseover', function() {
+        menuDesplegable.style.display = 'block';
+      });
 
-                botonDesplegable.addEventListener('mouseout', function() {
-                  menuDesplegable.style.display = 'none';
-                });
-              });
-            script.
-              document.addEventListener('DOMContentLoaded', function() {
-                var messageElement = document.getElementById('message');
-                if (messageElement) {
-                  setTimeout(function() {
-                    messageElement.style.opacity = '0';
-                  }, 4000); // 3000 milisegundos = 3 segundos, ajusta según sea necesario
-                }
-              });
+      botonDesplegable.addEventListener('mouseout', function() {
+        menuDesplegable.style.display = 'none';
+      });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      var messageElement = document.getElementById('message');
+      if (messageElement) {
+        setTimeout(function() {
+          messageElement.style.opacity = '0';
+        }, 4000); // 3000 milisegundos = 3 segundos, ajusta según sea necesario
+      }
+    });
