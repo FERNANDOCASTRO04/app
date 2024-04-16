@@ -23,19 +23,9 @@ body(style="background-image: url('https://ruminants.ceva.pro/hubfs/mercado-de-g
                   center
                     p#intro(style="font-size: 19px") Restablecer contraseña
 
-          form(action='/resetPassword', method='post')
+          form(action='/resetPassword', method='post', onsubmit="return validatePassword()")
             if message
               p#message(style='color: red;') #{message}
-            p
-              b
-                label(for='token') Token
-                br
-                input(type='text', name='resetToken', id='token', required)
-            .mb-3
-              b
-                label(for='correo') Correo 
-                br
-                input(type='text', name='correo', id='correo', required)
             .mb-3
               b
                 label(for='password') Nueva Contraseña
@@ -47,7 +37,18 @@ body(style="background-image: url('https://ruminants.ceva.pro/hubfs/mercado-de-g
                 br
                 input(type='password', name='confirmPassword', id='confirmPassword', required)
             .mb-3
-                button.btn.btn-outline-info(type="submit") Restablecer Contraseña
+              button.btn.btn-outline-info(type="submit") Restablecer Contraseña
+
+          script.
+            function validatePassword() {
+              var password = document.getElementById("password").value;
+              var confirmPassword = document.getElementById("confirmPassword").value;
+              if (password !== confirmPassword) {
+                alert("Las contraseñas no coinciden");
+                return false;
+              }
+              return true;
+            }
 
 
 

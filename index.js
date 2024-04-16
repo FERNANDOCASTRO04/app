@@ -59,6 +59,7 @@ app.get('/', function(req, res){
     res.render('primerapag')
 })
 
+
 app.get('/login', function(req, res){
     res.render('login')
 })
@@ -334,7 +335,8 @@ app.post('/editarRol', isAuthenticated, userController.editarRol, (req, res) => 
 
 app.post('/solicitud', userController.requestPasswordReset)
 
-app.post('/resetPassword', userController.resetPassword)
+app.post('/resetPassword/:correo/:resetToken', userController.resetPassword)
+
 
 // ... (más configuraciones y middleware)
 
