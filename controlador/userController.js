@@ -120,8 +120,7 @@ const sendPasswordResetEmail = async (req, resetTokenString) => {
             from: 'serviciotecnicoagrofer@gmail.com',
             to: correo,
             subject: 'Restablecimiento de Contraseña',
-            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: http://localhost:3000/restablecer?token=${resetTokenString}`,
-
+            text: `Para restablecer tu contraseña, haz clic en el siguiente enlace: http://localhost:3000/restablecer, copie y pegue este token unico y con limite de tiempo token= ${resetTokenString}`,
         };
         await transporter.sendMail(mailOptions);
         console.log('Correo electrónico enviado correctamente');
@@ -134,25 +133,26 @@ const sendPasswordResetEmail = async (req, resetTokenString) => {
 
 // Manejar el envío del formulario de restablecimiento de contraseña
 const resetPassword = async (req, res) => {
-    const { correo, resetToken } = req.params; // Obtener correo y resetToken de los parámetros de la URL
-    const { newPassword, confirmPassword } = req.body; // Obtener newPassword y confirmPassword del cuerpo de la solicitud
+    const { resetToken, newPassword } = req.body;
+    const correo = req.body.correo;
 
     try {
-        // Verificar si las contraseñas son iguales
-        if (newPassword !== confirmPassword) {
-            return res.render('restablecer', { message: 'Las contraseñas no coinciden' });
+        // Verificar si el token es válido y obtener el usuario asociado desde la base de datos
+        const user = await userModel.getUserByResetToken(correo, resetToken);
+        
+        if (!user) {
+            console.error('Token inválido o expirado - Usuario no encontrado');
+            return res.render('restablecer', { resetToken, message: 'Token inválido o expirado' });
         }
 
         // Restablecer la contraseña en la base de datos
-        await userModel.resetPassword(correo, resetToken, newPassword);
+        await userModel.resetPassword(resetToken, newPassword);
         res.redirect('/login');
     } catch (error) {
         console.error('Error al restablecer la contraseña:', error);
-        res.render('restablecer', { message: 'Error al restablecer la contraseña' });
+        res.render('restablecer', { resetToken, message: 'Error al restablecer la contraseña' });
     }
 };
-
-
 
 const mostrarUsuarios = async (req, res) => {
     try {

@@ -335,8 +335,7 @@ app.post('/editarRol', isAuthenticated, userController.editarRol, (req, res) => 
 
 app.post('/solicitud', userController.requestPasswordReset)
 
-app.post('/resetPassword/:correo/:resetToken', userController.resetPassword)
-
+app.post('/resetPassword', userController.resetPassword)
 
 // ... (más configuraciones y middleware)
 
