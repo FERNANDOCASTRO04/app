@@ -157,6 +157,17 @@ app.get('/vacas', isAuthenticated, async (req, res) => {
         res.status(500).send('Error interno del servidor');
     }
 });
+app.get('/salidas_vacas', isAuthenticated, async (req, res) => {
+ 
+    try {
+        const userId = req.session.userId;
+        const salidas_vacas = await getSalidasVacasByUserId(userId); // Aquí usamos la función directamente
+        res.render('salidas_vacas', { nombreUsuario: req.session.nombreUsuario , salidas_vacas: salidas_vacas });
+    } catch (error) {
+        console.error('Error al obtener salidas:', error);
+        res.status(500).send('Error interno del servidor');
+    }
+});
 
 // Definición de la ruta para la vista paginadmin
 app.get('/paginadmin', (req, res) => {
