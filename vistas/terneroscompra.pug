@@ -97,20 +97,24 @@ html
                         th(scope="col") Propietario
                         th 
                     tbody.table-group-divider.alin
-                    - let contador = 1
-                    each compra in compras 
+                    - if (compras.length === 0)
                       tr
-                        th(scope="row")= contador++
-                        td= compra.num_ternero
-                        td= compra.color
-                        td= compra.peso_entrada
-                        td= compra.fecha_compra
-                        td= compra.propietario
-                        td 
-                          button.btn.btn-warning(type="button", class="btnCebaCompra", data-num-ternero=compra.num_ternero, onclick=`showDialog('editar', '${compra.id_compra}','${compra.num_ternero}', '${compra.color}', '${compra.fecha_compra}', '${compra.peso_entrada}', '${compra.propietario}')`) 
-                            span.material-icons edit
-                          button.btn.btn-danger(type="button", class="btnEditarCompra", data-num-ternero=compra.num_ternero, onclick=`showDialog('vender', '${compra.id_compra}','${compra.num_ternero}', '${compra.color}', '${compra.fecha_compra}', '${compra.peso_entrada}', '${compra.propietario}')`)
-                             span.material-icons sell
+                        td(colspan="10") NO HAY REGISTROS PARA MOSTRAR
+                    - else
+                      - let contador = 1
+                      each compra in compras
+                        tr
+                          th(scope="row")= contador++
+                          td= compra.num_ternero
+                          td= compra.color
+                          td= compra.peso_entrada
+                          td= compra.fecha_compra
+                          td= compra.propietario
+                          td 
+                            button.btn.btn-warning(type="button", class="btnCebaCompra", data-num-ternero=compra.num_ternero, onclick=`showDialog('editar', '${compra.id_compra}','${compra.num_ternero}', '${compra.color}', '${compra.fecha_compra}', '${compra.peso_entrada}', '${compra.propietario}')`) 
+                              span.material-icons edit
+                            button.btn.btn-danger(type="button", class="btnEditarCompra", data-num-ternero=compra.num_ternero, onclick=`showDialog('vender', '${compra.id_compra}','${compra.num_ternero}', '${compra.color}', '${compra.fecha_compra}', '${compra.peso_entrada}', '${compra.propietario}')`)
+                              span.material-icons sell
                   button#prevPage.btn.btn-secondary.mb-2(type="button") Anterior
                   button#nextPage.btn.btn-secondary.mb-2(type="button") Siguiente        
                   .row 

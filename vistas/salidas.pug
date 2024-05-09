@@ -54,20 +54,25 @@ html
                 th(scope="col") Observaciones
               
             tbody.table-group-divider.alin
-            -let contador = 1
-            each salida in salidas
+            - if (salidas.length === 0)
               tr
-                td(scope="row")= contador++
-                td= salida.num_ternero
-                td= salida.sexo
-                td= salida.edad
-                td= salida.fecha_destete
-                td= salida.fecha_salida
-                td= salida.peso_inicial 
-                td= salida.peso_final
-                td= salida.causa_salida
-                td= salida.propietario
-                td= salida.observacion
+                td(colspan="11") NO HAY REGISTROS PARA MOSTRAR
+            - else
+              - let contador = 1
+              each salida in salidas
+            
+                tr
+                  td(scope="row")= contador++
+                  td= salida.num_ternero
+                  td= salida.sexo
+                  td= salida.edad
+                  td= salida.fecha_destete
+                  td= salida.fecha_salida
+                  td= salida.peso_inicial 
+                  td= salida.peso_final
+                  td= salida.causa_salida
+                  td= salida.propietario
+                  td= salida.observacion
           .row 
             .col-3       
               button#downloadExcel.btn.btn-success(type="button") Descargar listado de salidas

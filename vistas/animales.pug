@@ -99,25 +99,29 @@ html
                       th(scope="col") Observacion
                       th(scope="col")
                   tbody.table-group-divider.alin
-                  - let contador = 1
-                  each animal in animales
-                    tr
-                      th(scope="row")= contador++
-                      td= animal.num_ternero
-                      td= animal.sexo
-                      td= animal.color_cria
-                      td= animal.peso_nacimiento
-                      td= `${animal.num_vaca} - ${animal.nombre_madre}`
-                      td= animal.fecha_nacimiento
-                      td= animal.propietario
-                      td= animal.observaciones 
-                      td  
-                        button.btn.btn-warning(type="button", class="btnCebaCompra", data-num-ternero=animal.num_ternero, onclick=`showDialog('editar', '${animal.id_ternero}', '${animal.num_ternero}', '${animal.sexo}', '${animal.peso_nacimiento}', '${animal.color_cria}', '${animal.fecha_nacimiento}', '${animal.propietario}' ,'${animal.observaciones}')`) 
-                          span.material-icons edit
-                      
-                        button.btn.btn-danger(type="button", class="btnCebaCompra", data-num-ternero=animal.num_ternero, onclick=`showDialog('ceba', '${animal.id_ternero}', '${animal.num_ternero}', '${animal.sexo}', '${animal.peso_nacimiento}', '${animal.fecha_nacimiento}', '${animal.madre_cria}', '${animal.propietario}' ,'${animal.observaciones}')`) 
-                          span.material-icons add_circle
-              
+                    - if (animales.length === 0)
+                      tr
+                        td(colspan="10") NO HAY REGISTROS PARA MOSTRAR
+                    - else
+                      - let contador = 1
+                      each animal in animales
+                        tr
+                          th(scope="row")= contador++
+                          td= animal.num_ternero
+                          td= animal.sexo
+                          td= animal.color_cria
+                          td= animal.peso_nacimiento
+                          td= `${animal.num_vaca} - ${animal.nombre_madre}`
+                          td= animal.fecha_nacimiento
+                          td= animal.propietario
+                          td= animal.observaciones 
+                          td  
+                            button.btn.btn-warning(type="button", class="btnCebaCompra", data-num-ternero=animal.num_ternero, onclick=`showDialog('editar', '${animal.id_ternero}', '${animal.num_ternero}', '${animal.sexo}', '${animal.peso_nacimiento}', '${animal.color_cria}', '${animal.fecha_nacimiento}', '${animal.propietario}' ,'${animal.observaciones}')`) 
+                              span.material-icons edit
+                          
+                            button.btn.btn-danger(type="button", class="btnCebaCompra", data-num-ternero=animal.num_ternero, onclick=`showDialog('ceba', '${animal.id_ternero}', '${animal.num_ternero}', '${animal.sexo}', '${animal.peso_nacimiento}', '${animal.fecha_nacimiento}', '${animal.madre_cria}', '${animal.propietario}' ,'${animal.observaciones}')`) 
+                              span.material-icons add_circle
+                
                 button#prevPage.btn.btn-secondary(type="button") Anterior
                 button#nextPage.btn.btn-secondary(type="button") Siguiente
                 .message-container

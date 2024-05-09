@@ -100,20 +100,25 @@ html
                       th(scope="col") Observaciones
                       th(scope="col") 
                   tbody.table-group-divider.alin
-                  - let contador = 1
-                  each vaca in vacas
-                    tr
-                      th(scope="row")= contador++
-                      td= vaca.num_vaca
-                      td= vaca.nombre_vaca
-                      td= vaca.propietario
-                      td= vaca.observacion
-                      td
-                        button.btn.btn-warning(type="button", class="btnEditarCompra", data-num-vaca=vaca.num_vaca, onclick=`showDialog('editar', '${vaca.id_vaca}', '${vaca.num_vaca}', '${vaca.nombre_vaca}', '${vaca.propietario}', '${vaca.observacion}')`)                             
-                          span.material-icons edit
-                        button.btn.btn-danger(type="button", class="btnEliminarCompra", data-num-vaca=vaca.num_vaca, onclick=`showDialog('eliminar', '${vaca.id_vaca}', '${vaca.num_vaca}', '${vaca.nombre_vaca}', '${vaca.propietario}', '${vaca.observacion}')`)                           
-                          span.material-icons sell
-              
+                  - if (vacas.length === 0)
+                      tr
+                        td(colspan="10") NO HAY REGISTROS PARA MOSTRAR
+                  - else
+                      - let contador = 1
+                      each vaca in vacas
+                  
+                        tr
+                          th(scope="row")= contador++
+                          td= vaca.num_vaca
+                          td= vaca.nombre_vaca
+                          td= vaca.propietario
+                          td= vaca.observacion
+                          td
+                            button.btn.btn-warning(type="button", class="btnEditarCompra", data-num-vaca=vaca.num_vaca, onclick=`showDialog('editar', '${vaca.id_vaca}', '${vaca.num_vaca}', '${vaca.nombre_vaca}', '${vaca.propietario}', '${vaca.observacion}')`)                             
+                              span.material-icons edit
+                            button.btn.btn-danger(type="button", class="btnEliminarCompra", data-num-vaca=vaca.num_vaca, onclick=`showDialog('eliminar', '${vaca.id_vaca}', '${vaca.num_vaca}', '${vaca.nombre_vaca}', '${vaca.propietario}', '${vaca.observacion}')`)                           
+                              span.material-icons sell
+                  
                 button#prevPage.btn.btn-secondary.mb-2(type="button") Anterior
                 button#nextPage.btn.btn-secondary.mb-2(type="button") Siguiente       
                 .row 

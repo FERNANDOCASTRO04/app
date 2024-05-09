@@ -93,21 +93,26 @@ html
                   th(scope="col") Observacion
                   th
               tbody.table-group-divider.alin
-                - let contador = 1
-                each ceba in cebas
-                  tr
-                    th(scope="row")= contador++
-                    td= ceba.num_ternero
-                    td= ceba.peso_inicial
-                    td= ceba.fecha_destete
-                    td= `${ceba.num_vaca} - ${ceba.nombre_madre}`
-                    td= ceba.propietario
-                    td= ceba.observacion
-                    td 
-                      button.btn.btn-danger(type="button", class="btnEditarCompra", data-num-ternero=ceba.num_ternero, onclick=`showDialog('${ceba.id_ter}', '${ceba.num_ternero}', '${ceba.sexo}', '${ceba.peso_inicial}', '${ceba.propietario}', '${ceba.observacion}', '${ceba.fecha_destete}')`) Vender                               
-                                  span.material-icons sell
+                - if (cebas.length === 0)
+                      tr
+                        td(colspan="10") NO HAY REGISTROS PARA MOSTRAR
+                - else
+                      - let contador = 1
+                      each ceba in cebas
+                
+                        tr
+                          th(scope="row")= contador++
+                          td= ceba.num_ternero
+                          td= ceba.peso_inicial
+                          td= ceba.fecha_destete
+                          td= `${ceba.num_vaca} - ${ceba.nombre_madre}`
+                          td= ceba.propietario
+                          td= ceba.observacion
+                          td 
+                            button.btn.btn-danger(type="button", class="btnEditarCompra", data-num-ternero=ceba.num_ternero, onclick=`showDialog('${ceba.id_ter}', '${ceba.num_ternero}', '${ceba.sexo}', '${ceba.peso_inicial}', '${ceba.propietario}', '${ceba.observacion}', '${ceba.fecha_destete}')`) Vender                               
+                                        span.material-icons sell
             button#prevPage.btn.btn-secondary.mb-2(type="button") Anterior
-            button#nextPage.btn.btn-secondary.mb-2(type="button") Siguiente
+            button#nextPage.btn.btn-secondary.mb-2(type="button") Siguiente           
             .row 
               .col-2      
                 button#downloadExcel.btn.btn-success(type="button") Descargar lista

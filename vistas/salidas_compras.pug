@@ -53,19 +53,24 @@ html
                 th(scope="col") Observaciones
               
             tbody.table-group-divider.alin
-            -let contador = 1
-            each salida in salidas_compras
+            - if (salidas_compras.length === 0)
               tr
-                td(scope="row")= contador++
-                td= salida.num_ternero
-                td= salida.color
-                td= salida.fecha_compra
-                td= salida.fecha_salida
-                td= salida.peso_entrada
-                td= salida.peso_salida
-                td= salida.causa_salida
-                td= salida.propietario
-                td= salida.observacion
+                td(colspan="10") NO HAY REGISTROS PARA MOSTRAR
+            - else
+              - let contador = 1
+              each salida in salidas_compras
+            
+                tr
+                  td(scope="row")= contador++
+                  td= salida.num_ternero
+                  td= salida.color
+                  td= salida.fecha_compra
+                  td= salida.fecha_salida
+                  td= salida.peso_entrada
+                  td= salida.peso_salida
+                  td= salida.causa_salida
+                  td= salida.propietario
+                  td= salida.observacion
           .row 
             .col-2       
               button#downloadExcel.btn.btn-success(type="button") Descargar lista
