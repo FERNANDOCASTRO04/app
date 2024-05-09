@@ -157,6 +157,7 @@ app.get('/vacas', isAuthenticated, async (req, res) => {
         res.status(500).send('Error interno del servidor');
     }
 });
+
 app.get('/salidas_vacas', isAuthenticated, async (req, res) => {
  
     try {
