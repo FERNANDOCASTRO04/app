@@ -2,41 +2,34 @@ import { pool } from "../src/mysql.conector.js";
 import { eliminarAnimalPorNumero } from "./animalModel.js";
 
 
-export const insertarSalida = async ( id_ternero, num_ternero, sexo, peso_inicial, peso_final,propietario, edad, fechad, fechas, csalida, observacion, dueno ) => {
+export const insertarSalida = async (id_ternero, num_ternero, sexo, peso_inicial, peso_final, propietario, edad, fechad, fechas, csalida, observacion, dueno) => {
   try {
     const fechaObj = new Date(fechas);
-    
+    const opcionesFecha = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
 
-        // Formatear la fecha en español
-    const opcionesFecha = {
-      weekday: 'long', // día de la semana (Lunes)
-      day: 'numeric', // día del mes (18)
-      month: 'long', // nombre del mes (marzo)
-      year: 'numeric' // año (2024)
-    };
-      const fechaFormateada = fechaObj.toLocaleDateString('es-ES', opcionesFecha);
-    // Insertar la salida en la base de datos
-    const query = 'INSERT INTO `salidas` (`id_ternero`, `num_ternero`, `sexo`, `peso_inicial`, `peso_final`,`propietario`, `edad`, `fecha_destete`, `fecha_salida`, `causa_salida`, `observacion`, `dueno`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const queryResult = await pool.query(query, [ id_ternero, num_ternero, sexo, peso_inicial, peso_final,propietario, edad, fechad, fechaFormateada, csalida, observacion, dueno ]);
-    // Verificar que queryResult tenga una propiedad insertId
-    console.log(queryResult);
-    if (queryResult && queryResult) {
-      // Eliminar el animal de la lista
+    const query = 'INSERT INTO `salidas` (`id_ternero`, `num_ternero`, `sexo`, `peso_inicial`, `peso_final`, `propietario`, `edad`, `fecha_destete`, `fecha_salida`, `causa_salida`, `observacion`, `dueno`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    
+    const [queryResult] = await pool.query(query, [id_ternero, num_ternero, sexo, peso_inicial, peso_final, propietario, edad, fechad, fechaFormateada, csalida, observacion, dueno]);
+
+    if (queryResult.affectedRows > 0) {
+      console.log('✅ Salida insertada correctamente.');
+
+      // Llamar a la función de eliminación y mostrar el resultado
       const eliminacionExitosa = await eliminarAnimalPorNumero(num_ternero, dueno);
+      console.log('Resultado de eliminación:', eliminacionExitosa);
 
       if (eliminacionExitosa) {
-        console.log('Animal eliminado correctamente');
+        console.log('✅ Animal eliminado correctamente después de la salida.');
       } else {
-        console.log('Error al eliminar el animal');
+        console.log('⚠️ No se encontró el animal para eliminar.');
       }
-
-      // Resto del código...
     } else {
-      console.error('Error al insertar la salida en el modelo: Propiedad insertId no encontrada en queryResult');
-      throw new Error('Error al insertar la salida en el modelo: Propiedad insertId no encontrada en queryResult');
+      console.error('❌ Error al insertar la salida.');
+      throw new Error('Error al insertar la salida en la base de datos.');
     }
   } catch (error) {
-    console.error('Error al insertar la salida en el modelo:', error);
+    console.error('❌ Error en insertarSalida:', error);
     throw error;
   }
 };
