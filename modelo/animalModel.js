@@ -44,22 +44,25 @@ export const eliminarAnimalPorNumero = async (num_ternero, dueno) => {
     const query = 'DELETE FROM terneros WHERE num_ternero = ? AND dueno = ?';
 
     try {
-        console.log('Consulta SQL:', query);
+        console.log('Ejecutando consulta SQL:', query);
         console.log('Valores:', [num_ternero, dueno]);
         
-        const queryResult = await pool.query(query, [num_ternero, dueno]);
-        console.log(queryResult);
+        const [queryResult] = await pool.query(query, [num_ternero, dueno]); // Ajuste para obtener el resultado correcto
+        console.log('Resultado de la consulta DELETE:', queryResult);
+
         if (queryResult.affectedRows > 0) {
-            return true; // Éxito al eliminar el animal
+            console.log('✅ Animal eliminado correctamente.');
+            return true; 
         } else {
-            console.log('animal eliminado correctamente');
-            return true; // No se encontró el animal con el número de ternero especificado
+            console.log('⚠️ No se encontró un animal con ese número y dueño.');
+            return false; // Indica que no se eliminó ningún registro
         }
     } catch (error) {
-        console.error('Error al eliminar el animal:', error);
+        console.error('❌ Error al eliminar el animal:', error);
         throw error;
     }
 };
+
 
 
 export const getNumByuserId = async (num_ternero, dueno) => {
